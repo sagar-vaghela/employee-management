@@ -41,19 +41,20 @@ const HelpDesk = () => {
   useEffect(() => {
     completeTaskList.map((task, index) => task.id = index);
   },[completeTaskList])
+ 
+  
+  
 
   return (
     <>
-      <div class={styles.header}>
+     <div class={styles.header}>
         <p>HVG Help Desk</p>
       </div>
-      <div class={styles.container}>
-        <div class={styles.starterTemplate}>
-          <h2 class={styles.heading}>
-            Please use with Mozilla Firefox for better formatting in email.
-          </h2>
+      <div class={styles.starterTemplate}>
+          <h2 class={styles.heading}>Please use with Mozilla Firefox for better formatting in email.</h2>
           <h1>I'm here to write your daily update.</h1>
         </div>
+        <div class={styles.container}>
         <div class="col-sm-5">
           <div class="form-group stud_detail">
             <label for="client_name">Client Name : </label>
@@ -204,90 +205,24 @@ const HelpDesk = () => {
           </div>
         </div>
         <div class="col-sm-7">
-          <span class="subject">
-            Updates for test as on 16th May, 2023
-            <hr />
-          </span>
-          <div class="mail_body">
-            {client && (
-              <span class="client_name">
-                {`Hi - ${client}`},<br />
-                <br />
-              </span>
-            )}
-            <span class="update_msg">
-              Following are the updates for test as on 16th May, 2023 :<br />
-              <br />
-            </span>
-            <span class="list_done">
-              <b>
-                <u>List of Completed Tasks : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>
-                  test<b> [Done]</b>
-                </li>
-                <li>
-                  test<b> [Done]</b>
-                </li>
-              </ol>
-            </span>
-            <span class="list_progress">
-              <b>
-                <u>List of In-Progress Tasks : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>test</li>
-                <li>test</li>
-              </ol>
-            </span>
-            <span class="list_remaining">
-              <b>
-                <u>List of Remaining Tasks : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>test</li>
-                <li>test</li>
-              </ol>
-            </span>
-            <span class="list_query">
-              <b>
-                <u>Queries : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>test</li>
-                <li>test</li>
-              </ol>
-            </span>
-            <span class="list_note">
-              <b>
-                <u>Notes : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>test</li>
-                <li>test</li>
-              </ol>
-            </span>
-            <span class="review_note">
-              Please check with the latest updates and let us know your thoughts
-              for the same.
-              <br />
-            </span>
-            <span class="thanks">
-              <br />
-              Thanks,
-              <br />
-              test
-            </span>
-            <span class="total_worked"></span>
-          </div>
+                {project &&<span class="subject">{`Updates for ${project} as on 16th May, 2023`}<hr/></span>}
+                <div class="mail_body">
+                    {client && <span class="client_name">{`Hi - ${client}`},<br/><br/></span>}
+                    {project && <span class="update_msg">{`Following are the updates for ${project} as on 16th May, 2023 :`}<br/><br/></span>}
+                    <span class="list_done"><b><u>List of Completed Tasks : </u></b><br/><ol type="1"><li>test<b> [Done]</b></li><li>test<b> [Done]</b></li></ol></span>
+                    <span class="list_progress"><b><u>List of In-Progress Tasks : </u></b><br/><ol type="1"><li>test</li><li>test</li></ol></span>
+                    <span class="list_remaining"><b><u>List of Remaining Tasks : </u></b><br/><ol type="1"><li>test</li><li>test</li></ol></span>
+                    <span class="list_query"><b><u>Queries : </u></b><br/><ol type="1"><li>test</li><li>test</li></ol></span>
+                    <span class="list_note"><b><u>Notes : </u></b><br/><ol type="1"><li>test</li><li>test</li></ol></span>
+                   {tlName && (<>
+                    <span class="review_note">Please check with the latest updates and let us know your thoughts for the same.<br/></span>
+                    <span class="thanks"><br/>Thanks,<br/>{tlName}</span>
+                   </>
+                   )}
+                    <span class="total_worked"></span>
+                </div>
+            </div>
         </div>
-      </div>
     </>
   );
 };

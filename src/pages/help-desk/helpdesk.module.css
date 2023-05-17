@@ -29,9 +29,12 @@
 .container{
     width: 90% !important;
     margin: auto;
+    display: flex;
 }
 .starterTemplate {
     padding: 5px 15px;
+    width: 90% !important;
+    margin: auto;
 }
 .heading{
     color: red;
