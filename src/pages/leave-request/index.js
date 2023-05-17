@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "./leaveRequest.module.css";
 
 const LeaveRequest = () => {
   const options = [
@@ -159,7 +158,6 @@ const LeaveRequest = () => {
   ]
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState(options?.label);
-  // const [designation, setDesignation] = useState("");
   const [technology, setTechnology] = useState(optionsTechnology?.label);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -169,41 +167,30 @@ const LeaveRequest = () => {
   const [comment, setComment] = useState("");
   const handleName = (e) => {
     setName(e.target.value);
-    console.log("name", name);
   };
   const handleDesignation = (e) => {
-    console.log("designation", e?.target?.selectedOptions[0]?.label);
-    setDesignation(e?.target?.selectedOptions[0]?.label);
-    // let  x = document.getElementById("designation").value;
-    // document.getElementById("mail").innerHTML = "You selected: " + x;
+    setDesignation(e?.target?.selectedOptions[0]?.label);  
   };
   const handleTechnology = (e) => {
-    console.log("Technology", e?.target?.selectedOptions[0].label);
     setTechnology(e?.target?.selectedOptions[0].label);
   };
   const handleDate = (e) => {
     setDate(e?.target.value);
-    console.log("date", date);
   };
   const handleTime = (e) => {
     setTime(e?.target?.value);
-    console.log("time", time);
   };
   const handleToTime = (e) => {
     setToTime(e?.target?.value);
-    console.log("totime", totime);
   };
   const handleType = (e) => {
-    console.log("type", e?.target?.selectedOptions[0].label);
     setType(e?.target?.selectedOptions[0].label);
   };
   const handleReason = (e) => {
-    console.log("reason", e?.target?.selectedOptions[0].label);
-    setReason(e?.target?.selectedOptions[0].label);
+    setReason(e?.target?.selectedOptions[0].label)
   };
   const handleComment = (e) => {
     setComment(e?.target?.value);
-    console.log("comment", comment);
   };
   return (
     <>
@@ -266,7 +253,7 @@ const LeaveRequest = () => {
             />
           </div>
           <div className="form-group">
-            <label>From Time:</label>
+            <label htmlFor="from_time">From Time:</label>
             <input
               type="text"
               placeholder="From Time"
@@ -278,7 +265,7 @@ const LeaveRequest = () => {
             />
           </div>
           <div className="form-group">
-            <label>To Time:</label>
+            <label htmlFor="to_time">To Time:</label>
             <input
               type="text"
               placeholder="To Time"
@@ -290,7 +277,7 @@ const LeaveRequest = () => {
             />
           </div>
           <div className="form-group">
-            <label>Flexibility Type:</label>
+            <label htmlFor="flexibility_type">Flexibility Type:</label>
             <span>By default it will select not covering hours.</span>
             <select
               name="flexibility_type"
@@ -309,7 +296,7 @@ const LeaveRequest = () => {
             </select>
           </div>
           <div className="form-group">
-            <label>Reason:</label>
+            <label htmlFor="reason">Reason:</label>
             <select
               name="reason"
               className="form-control reason"
@@ -326,7 +313,7 @@ const LeaveRequest = () => {
             </select>
           </div>
           <div className="form-group">
-            <label>Comment:</label>
+            <label htmlFor="comment">Comment:</label>
             <textarea
               placeholder="Enter Comment"
               className="form-control comment"
@@ -345,7 +332,7 @@ const LeaveRequest = () => {
           <div className='welcome_msg'>{name && <>{`Hi Sir/Madam`}</>}
           </div>
           <div>
-            <span className='mail_date'>{date && <>{`I wish to apply for leave on ${date}`}</>}</span><br />
+            <span className='mail_date'>{date && <>{`I wish to apply for leave on ${date}`}</>}</span>
             <span className='mail_from_time'>{time && <>{` From ${time}`}</>}</span>
             <span className='mail_to_time'>{totime && <>{` to ${totime}`}</>}</span>
           </div>
@@ -369,7 +356,7 @@ const LeaveRequest = () => {
           </div>
           <div className='last_line'>
             <span className='mail_designation' id="mail">{designation && <>{`${designation}`}</>}</span>
-            <span className='mail_technology'>{technology && <>{`[${technology}]`}</>}<br/>{technology && <>{`HVG Infotech.`}</>}</span>
+            <span className='mail_technology'>{technology && <>{` [${technology}]`}</>}<br/>{technology && <>{`HVG Infotech.`}</>}</span>
           </div>
         </div>
       </div>

@@ -133,3 +133,6 @@ a {
 .form-group {
   margin-bottom: 15px;
 }
+textarea.form-control {
+  height: auto;
+}
