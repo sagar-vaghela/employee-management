@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  options,
+  DesignationOptions,
   optionsReason,
   optionsTechnology,
   optionsType,
@@ -8,7 +8,7 @@ import {
 
 const LeaveRequest = () => {
   const [name, setName] = useState("");
-  const [designation, setDesignation] = useState(options[0]?.label);
+  const [designation, setDesignation] = useState(DesignationOptions[0]?.label);
   const [technology, setTechnology] = useState(optionsTechnology[0]?.label);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -58,6 +58,7 @@ const LeaveRequest = () => {
               id="emp_name"
               onChange={handleName}
               value={name}
+              onkeyup="setName(this);"
             />
           </div>
           <div className="form-group">
@@ -69,7 +70,7 @@ const LeaveRequest = () => {
               onChange={handleDesignation}
               value={designation}
             >
-              {options.map((option) => (
+              {DesignationOptions.map((option) => (
                 <option key={option.value} value={option.label}>
                   {option.label}
                 </option>
@@ -113,6 +114,7 @@ const LeaveRequest = () => {
               id="from_time"
               onChange={handleTime}
               value={time}
+              onkeyup="set_from_time(this);"
             />
           </div>
           <div className="form-group">
@@ -168,6 +170,7 @@ const LeaveRequest = () => {
               id="comment"
               onChange={handleComment}
               value={comment}
+              onkeyup="setComment(this);"
             ></textarea>
           </div>
         </div>
@@ -201,23 +204,38 @@ const LeaveRequest = () => {
             <br />
             {reason && <>{`${reason}`}</>}
           </div>
-          <div className="mail_comment">
+          {/* <div className="mail_comment">
             <br />
             <b>{comment && <>{`Comment:`}</>}</b>
             <br />
             {comment && <>{`${comment}`}</>}
+          </div> */}
+          <div className="mail_emp_name">
+            <br />
+            {comment && (
+              <>
+                <b>Comment:</b>
+                <br />
+                {`${comment}`}
+              </>
+            )}
           </div>
+          <br />
+
           <div className="request_line">
             {date && <>{`I request you to kindly approve my leave.`}</>}
           </div>
-          <div className="mail_emp_name">
-            <br />
-            {name && <>{`Thanks,`}</>}
-            <br />
-            {name && <>{`${name}`}</>}
-          </div>
+
+          {name && (
+            <>
+              Thanks,
+              <br />
+              <span>{name && <>{`${name}`}</>}</span>
+            </>
+          )}
+
           <div className="last_line">
-            {options[0]?.label !== designation && (
+            {DesignationOptions[0]?.label !== designation && (
               <span className="mail_designation" id="mail">
                 {designation && <>{`${designation}`}</>}
               </span>
