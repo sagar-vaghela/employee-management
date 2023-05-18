@@ -141,3 +141,6 @@ a {
 span {
   font-size: 17px;
 }
+textarea.form-control {
+  height: auto;
+}

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "./leaveRequest.module.css";
 
 const LeaveRequest = () => {
   const options = [
@@ -89,7 +88,7 @@ const LeaveRequest = () => {
     { value: "114", label: "Web Design Team Leader" },
     { value: "45", label: "Web Designer" },
     { value: "115", label: "Website Administrator" },
-  ]
+  ];
   const optionsTechnology = [
     { value: "", label: "Select Technology" },
     { value: "7", label: "ASP.NET" },
@@ -113,18 +112,21 @@ const LeaveRequest = () => {
     { value: "14", label: "Support" },
     { value: "19", label: "UrbanIndia" },
     { value: "27", label: "Web QA" },
-  ]
+  ];
   const optionsType = [
     { value: "0", label: "Select Flexibility Type" },
     { value: "1", label: "Not Covering hours" },
     { value: "2", label: "Covering hours" },
-  ]
+  ];
   const optionsReason = [
     { value: "3", label: "Sick Leave" },
     { value: "4", label: "Out of Station" },
     { value: "5", label: "Family Function" },
     { value: "6", label: "Exams" },
-    { value: "7", label: "Attend Marriage/engagement/or any related functions" },
+    {
+      value: "7",
+      label: "Attend Marriage/engagement/or any related functions",
+    },
     { value: "9", label: "Hourly leaves" },
     { value: "10", label: "Out for work" },
     { value: "11", label: "submission of Project reports" },
@@ -156,10 +158,9 @@ const LeaveRequest = () => {
     { value: "39", label: "Matrimonial" },
     { value: "40", label: "Funeral" },
     { value: "41", label: "Rainy Day" },
-  ]
+  ];
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState(options?.label);
-  // const [designation, setDesignation] = useState("");
   const [technology, setTechnology] = useState(optionsTechnology?.label);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -172,42 +173,32 @@ const LeaveRequest = () => {
     console.log("name", name);
   };
   const handleDesignation = (e) => {
-    console.log("designation", e?.target?.selectedOptions[0]?.label);
     setDesignation(e?.target?.selectedOptions[0]?.label);
-    // let  x = document.getElementById("designation").value;
-    // document.getElementById("mail").innerHTML = "You selected: " + x;
   };
   const handleTechnology = (e) => {
-    console.log("Technology", e?.target?.selectedOptions[0].label);
     setTechnology(e?.target?.selectedOptions[0].label);
   };
   const handleDate = (e) => {
     setDate(e?.target.value);
-    console.log("date", date);
   };
   const handleTime = (e) => {
     setTime(e?.target?.value);
-    console.log("time", time);
   };
   const handleToTime = (e) => {
     setToTime(e?.target?.value);
-    console.log("totime", totime);
   };
   const handleType = (e) => {
-    console.log("type", e?.target?.selectedOptions[0].label);
     setType(e?.target?.selectedOptions[0].label);
   };
   const handleReason = (e) => {
-    console.log("reason", e?.target?.selectedOptions[0].label);
     setReason(e?.target?.selectedOptions[0].label);
   };
   const handleComment = (e) => {
     setComment(e?.target?.value);
-    console.log("comment", comment);
   };
   return (
     <>
-      <div className="container" >
+      <div className="container">
         <div className="col-lg-6">
           <h2>Hourly Leave Request</h2>
           <div className="form-group">
@@ -220,6 +211,7 @@ const LeaveRequest = () => {
               id="emp_name"
               onChange={handleName}
               value={name}
+              onkeyup="setName(this);"
             />
           </div>
           <div className="form-group">
@@ -275,6 +267,7 @@ const LeaveRequest = () => {
               id="from_time"
               onChange={handleTime}
               value={time}
+              onkeyup="set_from_time(this);"
             />
           </div>
           <div className="form-group">
@@ -287,6 +280,7 @@ const LeaveRequest = () => {
               id="to_time"
               onChange={handleToTime}
               value={totime}
+              onkeyup="set_to_time(this);"
             />
           </div>
           <div className="form-group">
@@ -299,13 +293,11 @@ const LeaveRequest = () => {
               onChange={handleType}
               value={type}
             >
-              {
-                optionsType.map((option) => (
-                  <option key={option.value} value={option.label}>
-                    {option.label}
-                  </option>
-                ))
-              }
+              {optionsType.map((option) => (
+                <option key={option.value} value={option.label}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </div>
           <div className="form-group">
@@ -317,12 +309,11 @@ const LeaveRequest = () => {
               onChange={handleReason}
               value={reason}
             >
-              {optionsReason.map((option)=>(
+              {optionsReason.map((option) => (
                 <option key={option.value} value={option.label}>
                   {option.label}
                 </option>
               ))}
-
             </select>
           </div>
           <div className="form-group">
@@ -333,47 +324,96 @@ const LeaveRequest = () => {
               id="comment"
               onChange={handleComment}
               value={comment}
+              onkeyup="setComment(this);"
             ></textarea>
           </div>
         </div>
 
         <div className="col-lg-6 mail_body">
           <div className="mail_subject">
-            {name && <h3>{`Hourly Leave Request - ${name}`}</h3>}
-              {name && <hr />}
+            {name && (
+              <>
+                <h3>{`Hourly Leave Request - ${name}`}</h3>
+                <hr />
+              </>
+            )}
           </div>
-          <div className='welcome_msg'>{name && <>{`Hi Sir/Madam`}</>}
-          </div>
+          {name && <div className="welcome_msg">Hi Sir/Madam</div>}
           <div>
-            <span className='mail_date'>{date && <>{`I wish to apply for leave on ${date}`}</>}</span><br />
-            <span className='mail_from_time'>{time && <>{` From ${time}`}</>}</span>
-            <span className='mail_to_time'>{totime && <>{` to ${totime}`}</>}</span>
+            {date && (
+              <span className="mail_date">{`I wish to apply for leave on ${date}`}</span>
+            )}
+            {time && <span className="mail_from_time">{` From ${time}`}</span>}
+            {totime && <span className="mail_to_time">{` to ${totime}`}</span>}
           </div>
-          <div className='mail_flexibility_type'><br />
-            <b>{type && <>{`Flexibility Type:`}</>}</b><br />{type && <>{`${type}`}</>}
-          </div>
-          <div className='mail_reason'>
+          <div className="mail_flexibility_type">
             <br />
-            <b>{reason && <>{`Reason:`}</>}</b><br />{reason && <>{`${reason}`}</>}
+            {type && (
+              <>
+                <b>Flexibility Type:</b>
+                <br />
+                {`${type}`}
+              </>
+            )}
           </div>
-          <div className='mail_comment'>
+          <div className="mail_reason">
             <br />
-            <b>{comment && <>{`Comment:`}</>}</b><br />{comment && <>{`${comment}`}</>}
+            {reason && (
+              <>
+                <b>Reason:</b>
+                <br />
+                {`${reason}`}
+              </>
+            )}
           </div>
-          <div className='request_line'>{date && <>{`I request you to kindly approve my leave.`}</>}</div>
-          <div className='mail_emp_name'>
+          <div className="mail_comment">
             <br />
-            {name && <>{`Thanks,`}</>}
-            <br />
-            {name && <>{`${name}`}</>}
+            {comment && (
+              <>
+                <b>Comment:</b>
+                <br />
+                {`${comment}`}
+              </>
+            )}
           </div>
-          <div className='last_line'>
-            <span className='mail_designation' id="mail">{designation && <>{`${designation}`}</>}</span>
-            <span className='mail_technology'>{technology && <>{`[${technology}]`}</>}<br/>{technology && <>{`HVG Infotech.`}</>}</span>
+          {date && (
+            <div className="request_line">
+              I request you to kindly approve my leave.
+            </div>
+          )}
+          <div className="mail_emp_name">
+            <br />
+            {name && (
+              <>
+                Thanks
+                <br />
+                {`${name}`}
+              </>
+            )}
+          </div>
+          <div className="last_line">
+            {designation && (
+              <span
+                className="mail_designation"
+                id="mail"
+              >{`${designation}`}</span>
+            )}
+            <span className="mail_technology">
+              {technology && (
+                <>
+                  {` [${technology}]`}
+                  <br />
+                  HVG Infotech.
+                </>
+              )}
+            </span>
           </div>
         </div>
       </div>
-      <div id="ui-datepicker-div" className="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
+      <div
+        id="ui-datepicker-div"
+        className="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
+      ></div>
     </>
   );
 };
