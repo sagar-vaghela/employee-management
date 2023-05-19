@@ -11,14 +11,14 @@ const CompletedTask = ({
   index,
 }) => {
   return (
-    <div class="element-block">
-      <div class="">
+    <div className="element-block">
+      <div className="">
         <input
           type="text"
           placeholder="Done Task"
           name="list_done"
           id="txt_done_task"
-          class="form-control custom-input task_detail done_task"
+          className="form-control custom-input task_detail done_task"
           value={task.value}
           onChange={(e) => {
             const index = completeTaskList.findIndex(
@@ -55,12 +55,12 @@ const CompletedTask = ({
           ></FontAwesomeIcon>
         )}
         {task.value === "" && isClicked === true && (
-          <span class="col-md-12 blank_error" style={{ color: "red" }}>
+          <span className="col-md-12 blank_error" style={{ color: "red" }}>
             Please Fill Existing Field.
           </span>
         )}
       </div>
-      <div class="clearfix"></div>
+      <div className="clearfix"></div>
     </div>
   );
 };

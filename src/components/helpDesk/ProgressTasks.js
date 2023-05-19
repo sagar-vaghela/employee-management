@@ -18,14 +18,13 @@ const ProgressTasks = ({
             placeholder="In-Progress Task"
             name="list_progress"
             id="txt_progress_task"
-            class="form-control custom-input task_detail progress_task"
+            className="form-control custom-input task_detail progress_task"
             value={test.value}
             onChange={(e) => {
               const TaskIndex = progressTask.findIndex(
                 (elm) => elm.id === test.id
               );
               const task_list = progressTask[TaskIndex];
-              console.log("TaskIndex", TaskIndex);
               task_list.value = e.target.value;
               setProgressTask([...progressTask]);
               if (

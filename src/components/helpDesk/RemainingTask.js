@@ -11,14 +11,14 @@ const RemainingTask = ({
 }) => {
     return (
         <>
-            <div class="element-block">
-                <div class="">
+            <div className="element-block">
+                <div className="">
                     <input
                         type="text"
                         placeholder="In-Progress Task"
                         name="list_progress"
                         id="txt_progress_task"
-                        class="form-control custom-input task_detail progress_task"
+                        className="form-control custom-input task_detail progress_task"
                         value={remainingTaskList.value}
                         onChange={(e) => {
                             const index = remainingTaskList.findIndex(
@@ -55,12 +55,12 @@ const RemainingTask = ({
                         ></FontAwesomeIcon>
                     )}
                     {remainingTask.value === "" && isClick === true && (
-                        <span class="col-md-12 blank_error" style={{ color: "red" }}>
+                        <span className="col-md-12 blank_error" style={{ color: "red" }}>
                             Please Fill Existing Field.
                         </span>
                     )}
                 </div>
-                <div class="clearfix"></div>
+                <div className="clearfix"></div>
             </div>
         </>
     )

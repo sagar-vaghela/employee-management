@@ -10,14 +10,14 @@ const Queries = ({
     addQueriesTask,
 }) => {
     return (
-        <div class="element-block">
-            <div class="">
+        <div className="element-block">
+            <div className="">
                 <input
                     type="text"
                     placeholder="Query"
                     name="list_query"
                     id="txt_query"
-                    class="form-control custom-input task_detail query_task"
+                    className="form-control custom-input task_detail query_task"
                     value={queriesList.value}
                     onChange={(e) => {
                         const index = queriesList.findIndex(
@@ -54,13 +54,13 @@ const Queries = ({
                     ></FontAwesomeIcon>
                 )}
                 {queriesTask.value === "" && isQueriesClick === true && (
-                    <span class="col-md-12 blank_error" style={{ color: "red" }}>
+                    <span className="col-md-12 blank_error" style={{ color: "red" }}>
                         Please Fill Existing Field.
                     </span>
                 )}
 
             </div>
-            <div class="clearfix"></div>
+            <div className="clearfix"></div>
         </div>
     )
 }
