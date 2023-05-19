@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./helpdesk.module.css";
-import CompletedTask from "@/components/helpDesk/CompletedTask";
-import ProgressTasks from "@/components/helpDesk/ProgressTasks";
-import Notes from "@/components/helpDesk/Notes";
-import RemainingTask from "@/components/helpDesk/RemainingTask";
-import Queries from "@/components/helpDesk/Queries";
-import Moment from 'moment';
+import Moment from "moment";
 import HelpDeskListing from "@/components/helpDesk/HelpDeskListing";
+import CommonList from "@/components/helpDesk/CommonList";
+
 const HelpDesk = () => {
   const [client, setClient] = useState("");
   const [project, setProject] = useState("");
@@ -20,12 +17,12 @@ const HelpDesk = () => {
   const [queriesList, setQueriesList] = useState([{ id: 0, value: "" }]);
   const [notes, setNotes] = useState([{ id: 0, value: "" }]);
   const [tlName, setTlName] = useState("");
-  const [isClicked, setIsClicked] = useState(false);
-  const [isInClicked, setIsInClicked] = useState(false);
+  const [isCompletedClick, setIsCompletedClick] = useState(false);
+  const [isProgressClicked, setIsProgressClicked] = useState(false);
   const [isNotesClicked, setIsNotesClicked] = useState(false);
-  const [isClick, setIsClick] = useState(false);
+  const [isRemainClicked, setIsRemainClicked] = useState(false);
   const [isQueriesClick, setIsQueriesClick] = useState(false);
-  const formatDate = Moment().format('DD MMM, YYYY')
+  const formatDate = Moment().format("DD MMM, YYYY");
 
   useEffect(() => {
     completeTaskList.map((task, index) => (task.id = index));
@@ -48,14 +45,14 @@ const HelpDesk = () => {
   }, [queriesList]);
 
   const addTask = (task) => {
-    setIsClicked(true);
+    setIsCompletedClick(true);
     if (completeTaskList.length === 1) {
       if (task.value !== "") {
         setCompleteTaskList([
           ...completeTaskList,
           { id: completeTaskList.length, value: "" },
         ]);
-        setIsClicked(false);
+        setIsCompletedClick(false);
       }
     } else {
       if (completeTaskList[completeTaskList?.length - 1].value !== "") {
@@ -63,20 +60,20 @@ const HelpDesk = () => {
           ...completeTaskList,
           { id: completeTaskList.length, value: "" },
         ]);
-        setIsClicked(false);
+        setIsCompletedClick(false);
       }
     }
   };
 
   const addProgress = (test) => {
-    setIsInClicked(true);
+    setIsProgressClicked(true);
     if (progressTask.length === 0) {
       if (test.value !== "") {
         setProgressTask([
           ...progressTask,
           { id: progressTask.length, value: "" },
         ]);
-        setIsInClicked(false);
+        setIsProgressClicked(false);
       }
     } else {
       if (progressTask[progressTask?.length - 1].value !== "") {
@@ -84,7 +81,7 @@ const HelpDesk = () => {
           ...progressTask,
           { id: progressTask.length, value: "" },
         ]);
-        setIsInClicked(false);
+        setIsProgressClicked(false);
       }
     }
   };
@@ -104,14 +101,14 @@ const HelpDesk = () => {
     }
   };
   const addRemainingTask = (remainingTask) => {
-    setIsClick(true);
+    setIsRemainClicked(true);
     if (remainingTaskList.length === 1) {
       if (remainingTask.value !== "") {
         setRemainingTaskList([
           ...remainingTaskList,
           { id: remainingTaskList.length, value: "" },
         ]);
-        setIsClick(false);
+        setIsRemainClicked(false);
       }
     } else {
       if (remainingTaskList[remainingTaskList?.length - 1].value !== "") {
@@ -119,7 +116,7 @@ const HelpDesk = () => {
           ...remainingTaskList,
           { id: remainingTaskList.length, value: "" },
         ]);
-        setIsClick(false);
+        setIsRemainClicked(false);
       }
     }
   };
@@ -127,7 +124,7 @@ const HelpDesk = () => {
   const addQueriesTask = (queriesTask) => {
     setIsQueriesClick(true);
     if (queriesList.length === 1) {
-      if (queriesList.value !== "") {
+      if (queriesTask.value !== "") {
         setQueriesList([...queriesList, { id: queriesList.length, value: "" }]);
         setIsQueriesClick(false);
       }
@@ -138,8 +135,7 @@ const HelpDesk = () => {
       }
     }
   };
-
-
+console.log('isCompletedClick',isCompletedClick);
   return (
     <>
       <div className={styles.header}>
@@ -149,7 +145,7 @@ const HelpDesk = () => {
         <h2 className={styles.heading}>
           Please use with Mozilla Firefox for better formatting in email.
         </h2>
-        <h1>I' m here to write your daily update.</h1>
+        <h1>I’ m here to write your daily update.</h1>
       </div>
       <div className={styles.container}>
         <div className="col-sm-5">
@@ -160,7 +156,6 @@ const HelpDesk = () => {
               className="form-control"
               id="client_name"
               placeholder="Enter Client Name"
-              onkeyup="setClientName(this);"
               value={client}
               onChange={(e) => setClient(e.target.value)}
             />
@@ -172,108 +167,61 @@ const HelpDesk = () => {
               className="form-control"
               id="project_name"
               placeholder="Enter Project Name"
-              onkeyup="setProjectName(this);"
               value={project}
               onChange={(e) => setProject(e.target.value)}
             />
           </div>
-          <div className="form-group stud_detail">
-            <label htmlFor="client_name" className="task_label">
-              List of Completed Tasks :{" "}
-            </label>
-            {completeTaskList.map((task, index) => {
-              return (
-                <CompletedTask
-                  key={task.id}
-                  setCompleteTaskList={setCompleteTaskList}
-                  completeTaskList={completeTaskList}
-                  task={task}
-                  index={index}
-                  setIsClicked={setIsClicked}
-                  isClicked={isClicked}
-                  addTask={() => addTask(task)}
-                />
-              );
-            })}
-          </div>
-          <div className="form-group stud_detail">
-            <label htmlFor="client_name" className="task_label">
-              List of In-Progress Tasks :{" "}
-            </label>
-            {progressTask.map((test, index) => {
-              return (
-                <ProgressTasks
-                  key={test.id}
-                  setProgressTask={setProgressTask}
-                  progressTask={progressTask}
-                  test={test}
-                  index={index}
-                  setIsInClicked={setIsInClicked}
-                  isInClicked={isInClicked}
-                  addProgress={() => addProgress(test)}
-                />
-              );
-            })}
-          </div>
-          <div className="form-group stud_detail">
-            <label htmlFor="client_name" className="task_label">
-              List of Remaining Tasks :{" "}
-            </label>
-            {remainingTaskList.map((remainingTask) => {
-              return (
-                <RemainingTask
-                  key={remainingTask.id}
-                  setRemainingTaskList={setRemainingTaskList}
-                  remainingTaskList={remainingTaskList}
-                  remainingTask={remainingTask}
-                  setIsClicked={setIsClicked}
-                  isClick={isClick}
-                  addRemainingTask={() => {
-                    addRemainingTask(remainingTask);
-                  }}
-                />
-              );
-            })}
-          </div>
-          <div className="form-group stud_detail">
-            <label htmlFor="client_name" className="task_label">
-              Queries :{" "}
-            </label>
-            {queriesList.map((queriesTask) => {
-              return (
-                <Queries
-                  key={queriesTask.id}
-                  setQueriesList={setQueriesList}
-                  queriesList={queriesList}
-                  queriesTask={queriesTask}
-                  setIsClicked={setIsClicked}
-                  isQueriesClick={isQueriesClick}
-                  addQueriesTask={() => {
-                    addQueriesTask(queriesTask);
-                  }}
-                />
-              );
-            })}
-          </div>
-          <div className="form-group stud_detail">
-            <label htmlFor="client_name" className="task_label">
-              Notes :{" "}
-            </label>
-            {notes.map((testNotes, index) => {
-              return (
-                <Notes
-                  key={testNotes.id}
-                  setNotes={setNotes}
-                  notes={notes}
-                  index={index}
-                  testNotes={testNotes}
-                  setIsNotesClicked={setIsNotesClicked}
-                  isNotesClicked={isNotesClicked}
-                  addNotes={() => addNotes(testNotes)}
-                />
-              );
-            })}
-          </div>
+
+          <CommonList
+            fields={completeTaskList}
+            setFields={setCompleteTaskList}
+            addButtonIsClicked={setIsCompletedClick}
+            isAddButtonClicked={isCompletedClick}
+            addField={addTask}
+            title="List of Completed Tasks :"
+            placeholder="Done Task"
+          />
+
+          <CommonList
+            fields={progressTask}
+            setFields={setProgressTask}
+            addButtonIsClicked={setIsProgressClicked}
+            isAddButtonClicked={isProgressClicked}
+            addField={addProgress}
+            title="List of In-Progress Tasks :"
+            placeholder="Enter In-Progress Task"
+          />
+
+          <CommonList
+            fields={remainingTaskList}
+            setFields={setRemainingTaskList}
+            addButtonIsClicked={setIsRemainClicked}
+            isAddButtonClicked={isRemainClicked}
+            addField={addRemainingTask}
+            title={"List of Remaining Tasks :"}
+            placeholder="Remaining Tasks"
+          />
+
+          <CommonList
+            fields={queriesList}
+            setFields={setQueriesList}
+            addButtonIsClicked={setIsQueriesClick}
+            isAddButtonClicked={isQueriesClick}
+            addField={addQueriesTask}
+            title={"Queries :"}
+            placeholder="Query"
+          />
+
+          <CommonList
+            fields={notes}
+            setFields={setNotes}
+            addButtonIsClicked={setIsNotesClicked}
+            isAddButtonClicked={isNotesClicked}
+            addField={addNotes}
+            title={"Notes:"}
+            placeholder="Enter Notes"
+          />
+
           <div className="form-group stud_detail">
             <label htmlFor="tl_name">TL Name : </label>
             <input
@@ -281,7 +229,6 @@ const HelpDesk = () => {
               className="form-control"
               id="tl_name"
               placeholder="TL Name"
-              onkeyup="SetTlName(this);"
               value={tlName}
               onChange={(e) => setTlName(e.target.value)}
             />
@@ -313,7 +260,7 @@ const HelpDesk = () => {
                 list={completeTaskList}
                 title={"List of Completed Tasks :"}
               />
-              <HelpDeskListing  
+              <HelpDeskListing
                 list={progressTask}
                 title={"List of In-Progress Tasks :"}
               />
