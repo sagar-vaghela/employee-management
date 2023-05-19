@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./helpdesk.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import CompletedTask from "@/components/helpDesk/CompletedTask";
 import ProgressTasks from "@/components/helpDesk/ProgressTasks";
 import Notes from "@/components/helpDesk/Notes";
+import RemainingTask from "@/components/helpDesk/RemainingTask";
+import Queries from "@/components/helpDesk/Queries";
 
 const HelpDesk = () => {
   const [client, setClient] = useState("");
@@ -13,13 +13,17 @@ const HelpDesk = () => {
     { id: 0, value: "" },
   ]);
   const [progressTask, setProgressTask] = useState([{ id: 0, value: "" }]);
-  const [remainingTask, setRemainingTask] = useState([]);
-  const [queries, setQueries] = useState([]);
+  const [remainingTaskList, setRemainingTaskList] = useState([
+    { id: 0, value: "" },
+  ]);
+  const [queriesList, setQueriesList] = useState([{ id: 0, value: "" },]);
   const [notes, setNotes] = useState([{ id: 0, value: "" }]);
   const [tlName, setTlName] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const [isInClicked, setIsInClicked] = useState(false);
   const [isNotesClicked, setIsNotesClicked] = useState(false);
+  const [isClick, setIsClick] = useState(false);
+  const [isQueriesClick, setIsQueriesClick] = useState(false);
 
   useEffect(() => {
     completeTaskList.map((task, index) => (task.id = index));
@@ -89,6 +93,55 @@ const HelpDesk = () => {
       }
     }
   };
+  const addRemainingTask = (remainingTask) => {
+    setIsClick(true);
+    if (remainingTaskList.length === 1) {
+      if (remainingTask.value !== "") {
+        setRemainingTaskList([
+          ...remainingTaskList,
+          { id: remainingTaskList.length, value: "" },
+        ]);
+        setIsClick(false);
+      }
+    } else {
+      if (remainingTaskList[remainingTaskList?.length - 1].value !== "") {
+        setRemainingTaskList([
+          ...remainingTaskList,
+          { id: remainingTaskList.length, value: "" },
+        ]);
+        setIsClick(false);
+      }
+    }
+  }
+
+  const addQueriesTask = (queriesTask) => {
+    setIsQueriesClick(true);
+    if (queriesList.length === 1) {
+      if (queriesList.value !== "") {
+        setQueriesList([
+          ...queriesList,
+          { id: queriesList.length, value: "" },
+        ]);
+        setIsQueriesClick(false);
+      }
+    } else {
+      if (queriesList[queriesList?.length - 1].value !== "") {
+        setQueriesList([
+          ...queriesList,
+          { id: queriesList.length, value: "" },
+        ]);
+        setIsQueriesClick(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    completeTaskList.map((task, index) => task.id = index);
+    remainingTaskList.map((remainingTask, index) => remainingTask.id = index);
+    queriesList.map((queriesTask, index) => queriesTask.id = index);
+    progressTask.map((test, index) => test.id = index);
+    notes.map((testNotes, index) => testNotes.id = index);
+  }, [completeTaskList, remainingTaskList, queriesList, progressTask, notes])
 
   return (
     <>
@@ -150,7 +203,7 @@ const HelpDesk = () => {
             <label for="client_name" class="task_label">
               List of In-Progress Tasks :{" "}
             </label>
-            {progressTask.map((test,index) => {
+            {progressTask.map((test, index) => {
               return (
                 <ProgressTasks
                   key={test.id}
@@ -169,53 +222,43 @@ const HelpDesk = () => {
             <label for="client_name" class="task_label">
               List of Remaining Tasks :{" "}
             </label>
-            <div class="element-block">
-              <div class="">
-                <input
-                  type="text"
-                  placeholder="Remaining Task"
-                  name="list_remaining"
-                  id="txt_remaining_task"
-                  class="form-control custom-input task_detail remaining_task"
-                  value={remainingTask}
-                  onChange={(e) => setRemainingTask(e.target.value)}
+            {remainingTaskList.map((remainingTask) => {
+              return (
+                <RemainingTask
+                  key={remainingTask.id}
+                  setRemainingTaskList={setRemainingTaskList}
+                  remainingTaskList={remainingTaskList}
+                  remainingTask={remainingTask}
+                  setIsClicked={setIsClicked}
+                  isClick={isClick}
+                  addRemainingTask={() => { addRemainingTask(remainingTask) }}
                 />
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className="font-20"
-                ></FontAwesomeIcon>
-              </div>
-              <div class="clearfix"></div>
-            </div>
+              );
+            })}
           </div>
           <div class="form-group stud_detail">
             <label for="client_name" class="task_label">
               Queries :{" "}
             </label>
-            <div class="element-block">
-              <div class="">
-                <input
-                  type="text"
-                  placeholder="Query"
-                  name="list_query"
-                  id="txt_query"
-                  class="form-control custom-input task_detail query_task"
-                  value={queries}
-                  onChange={(e) => setQueries(e.target.value)}
+            {queriesList.map((queriesTask) => {
+              return (
+                <Queries
+                  key={queriesTask.id}
+                  setQueriesList={setQueriesList}
+                  queriesList={queriesList}
+                  queriesTask={queriesTask}
+                  setIsClicked={setIsClicked}
+                  isQueriesClick={isQueriesClick}
+                  addQueriesTask={() => { addQueriesTask(queriesTask) }}
                 />
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className="font-20"
-                ></FontAwesomeIcon>
-              </div>
-              <div class="clearfix"></div>
-            </div>
+              );
+            })}
           </div>
           <div class="form-group stud_detail">
             <label for="client_name" class="task_label">
               Notes :{" "}
             </label>
-            {notes.map((testNotes,index) => {
+            {notes.map((testNotes, index) => {
               return (
                 <Notes
                   key={testNotes.id}
@@ -244,123 +287,97 @@ const HelpDesk = () => {
           </div>
         </div>
         <div class="col-sm-7">
-          {project && (
-            <span class="subject">
-              {`Updates for ${project} as on 16th May, 2023`}
-              <hr />
-            </span>
-          )}
           <div class="mail_body">
-            {client && (
-              <span class="client_name">
-                {`Hi - ${client}`},<br />
+            {project && <span class="subject">{`Updates for ${project} as on 16th May, 2023`}<hr /></span>}
+            <div class="mail_body">
+              {client && <span class="client_name">{`Hi - ${client}`},<br /><br /></span>}
+              {project && <span class="update_msg">{`Following are the updates for ${project} as on 16th May, 2023 :`}<br /><br /></span>}
+              <span class="list_done">
+                {completeTaskList[0]?.value !== "" && (
+                  <b>
+                    <u>List of Completed Tasks : </u>
+                  </b>
+                )}
                 <br />
+                <ol type="1">
+                  {completeTaskList &&
+                    completeTaskList.map((task, index) => {
+                      if (task.value !== "") {
+                        return (
+                          <>
+                            <li key={index}>
+                              {task.value} <b>[Done]</b>
+                            </li>
+                          </>
+                        );
+                      }
+                    })}
+                </ol>
               </span>
-            )}
-            {project && (
-              <span class="update_msg">
-                {`Following are the updates for ${project} as on 16th May, 2023 :`}
+              <span class="list_progress">
+                {progressTask[0]?.value !== "" && (
+                  <b>
+                    <u>List of In-Progress Tasks : </u>
+                  </b>
+                )}
                 <br />
-                <br />
+                <ol type="1">
+                  {progressTask &&
+                    progressTask.map((test, index) => {
+                      if (test.value !== "") {
+                        return <li key={index}>{test.value}</li>;
+                      }
+                    })}
+                </ol>
               </span>
-            )}
-            <span class="list_done">
-              {completeTaskList[0]?.value !== "" && (
-                <b>
-                  <u>List of Completed Tasks : </u>
-                </b>
+              <span class="list_remaining">
+              {remainingTaskList[0].value !== '' && (<b><u>List of Remaining Tasks : </u></b>)}
+              <br />
+              <ol type="1">
+              {remainingTaskList.map((remainingTask) => {
+                return (
+                  <>
+                    {remainingTask.value !== "" && <li>{remainingTask.id}{remainingTask.value}</li>}
+                  </>
+                )
+              })}
+              </ol>
+              </span>
+              <span class="list_query">
+              {queriesList[0].value !== '' && (<b><u>Queries : </u></b>)}<br /><ol type="1">
+
+              {queriesList.map((queriesTask) => {
+                return (
+                  <>
+                    {queriesTask.value !== "" && <li>{queriesTask.id}{queriesTask.value}</li>}
+                  </>
+                )
+              })}
+              </ol></span>
+              <span class="list_note">
+              {notes[0].value !== "" && (<b><u>Notes : </u></b>)}<br /><ol type="1">
+
+              {notes &&
+                notes.map((testNotes) => {
+                  if (testNotes.value !== "") {
+                    return <li>{testNotes.id}{testNotes.value}</li>;
+                  }
+                })}
+              </ol></span>
+              {completeTaskList[0].value !== "" && (
+                <>Please check with the latest updates and let us know your thoughts for the same.<br /></>
               )}
-              <br />
-              <ol type="1">
-                {completeTaskList &&
-                  completeTaskList.map((task, index) => {
-                    if (task.value !== "") {
-                      return (
-                        <>
-                          <li key={index}>
-                            {task.value} <b>[Done]</b>
-                          </li>
-                        </>
-                      );
-                    }
-                  })}
-              </ol>
-              {completeTaskList[0]?.value !== "" && (
-                <>Please check with the latest updates and let us know your thoughts for the same.</>
-              )}
-            </span>
-            <span class="list_progress">
-              {progressTask[0]?.value !== "" && (
-                <b>
-                  <u>List of In-Progress Tasks : </u>
-                </b>
-              )}
-              <br />
-              <ol type="1">
-                {progressTask &&
-                  progressTask.map((test, index) => {
-                    if (test.value !== "") {
-                      return <li key={index}>{test.value}</li>;
-                    }
-                  })}
-              </ol>
-            </span>
-            <span class="list_remaining">
-              <b>
-                <u>List of Remaining Tasks : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>test</li>
-                <li>test</li>
-              </ol>
-            </span>
-            <span class="list_query">
-              <b>
-                <u>Queries : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>test</li>
-                <li>test</li>
-              </ol>
-            </span>
-            <span class="list_note">
-              {notes[0]?.value !== "" && (
-                <b>
-                  <u>Notes : </u>
-                </b>
-              )}
-              <br />
-              <ol type="1">
-                {notes &&
-                  notes.map((testNotes, index) => {
-                    if (testNotes.value !== "") {
-                      return <li key={index}>{testNotes.value}</li>;
-                    }
-                  })}
-              </ol>
-            </span>
-            {tlName && (
-              <>
-                <span class="review_note">
-                  Please check with the latest updates and let us know your
-                  thoughts for the same.
-                  <br />
-                </span>
-                <span class="thanks">
-                  <br />
-                  Thanks,
-                  <br />
-                  {tlName}
-                </span>
+              {tlName && (<>
+                <span class="thanks"><br />Thanks,<br />{tlName}</span>
               </>
-            )}
-            <span class="total_worked"></span>
+              )}
+              <span class="total_worked"></span>
+            </div>
           </div>
         </div>
       </div>
     </>
+
   );
 };
 
