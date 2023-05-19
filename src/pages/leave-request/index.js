@@ -70,9 +70,9 @@ const LeaveRequest = () => {
               onChange={handleDesignation}
               value={designation}
             >
-              {DesignationOptions.map((option) => (
-                <option key={option.value} value={option.label}>
-                  {option.label}
+              {DesignationOptions.map((DesOption) => (
+                <option key={DesOption.value} value={DesOption.label}>
+                  {DesOption.label}
                 </option>
               ))}
             </select>
@@ -86,9 +86,9 @@ const LeaveRequest = () => {
               onChange={handleTechnology}
               value={technology}
             >
-              {optionsTechnology.map((option) => (
-                <option key={option.value} value={option.label}>
-                  {option.label}
+              {optionsTechnology.map((TechOption) => (
+                <option key={TechOption.value} value={TechOption.label}>
+                  {TechOption.label}
                 </option>
               ))}
             </select>
@@ -139,9 +139,9 @@ const LeaveRequest = () => {
               onChange={handleType}
               value={type}
             >
-              {optionsType.map((option) => (
-                <option key={option.value} value={option.label}>
-                  {option.label}
+              {optionsType.map((TypeOption) => (
+                <option key={TypeOption.value} value={TypeOption.label}>
+                  {TypeOption.label}
                 </option>
               ))}
             </select>
@@ -155,9 +155,9 @@ const LeaveRequest = () => {
               onChange={handleReason}
               value={reason}
             >
-              {optionsReason.map((option) => (
-                <option key={option.value} value={option.label}>
-                  {option.label}
+              {optionsReason.map((ReasonOption) => (
+                <option key={ReasonOption.value} value={ReasonOption.label}>
+                  {ReasonOption.label}
                 </option>
               ))}
             </select>
@@ -176,63 +176,89 @@ const LeaveRequest = () => {
         </div>
 
         <div className="col-lg-6 mail_body">
-          <div className="mail_subject">
-            {name && <h3>{`Hourly Leave Request - ${name}`}</h3>}
-            {name && <hr />}
-          </div>
-          <div className="welcome_msg">{name && <>{`Hi Sir/Madam`}</>}</div>
+          {name && (
+            <div className="mail_subject">
+              <h3>{`Hourly Leave Request - ${name}`}</h3> <hr />
+            </div>
+          )}
+          {name && (
+            <>
+              <div className="welcome_msg">Hi Sir/Madam</div>
+              <br />
+            </>
+          )}
           <div>
-            <span className="mail_date">
-              {date && <>{`I wish to apply for leave on ${date}`}</>}
-            </span>
-            <span className="mail_from_time">
-              {time && <>{` From ${time}`}</>}
-            </span>
-            <span className="mail_to_time">
-              {toTime && <>{` to ${toTime}`}</>}
-            </span>
+            {date && (
+              <>
+                <span className="mail_date">{`I wish to apply for leave on ${date}`}</span>
+              </>
+            )}
+            {time && <span className="mail_from_time">{` From ${time}`}</span>}
+            {toTime && <span className="mail_to_time">{` to ${toTime}`}</span>}
           </div>
-          <div className="mail_flexibility_type">
-            <br />
-            <b>{type && <>{`Flexibility Type:`}</>}</b>
-            <br />
-            {type && <>{`${type}`}</>}
-          </div>
-          <div className="mail_reason">
-            <br />
-            <b>{reason && <>{`Reason:`}</>}</b>
-            <br />
-            {reason && <>{`${reason}`}</>}
-          </div>
-          {/* <div className="mail_comment">
-            <br />
-            <b>{comment && <>{`Comment:`}</>}</b>
-            <br />
-            {comment && <>{`${comment}`}</>}
-          </div> */}
-          <div className="mail_emp_name">
-            <br />
-            {comment && (
+          {/* {type && (
+            <div className="mail_flexibility_type">
+              <br />
+              <b>Flexibility Type:</b>
+              <br />
+              {`${type}`}
+            </div>
+          )} */}
+          {optionsType[0]?.label !== type && type && (
+            <div className="mail_flexibility_type">
+              <br />
+              <b>Flexibility Type:</b>
+              <br />
+              {`${type}`}
+            </div>
+          )}
+          {/* {reason && (
+            <div className="mail_reason">
+              <br />
+              <b>Reason:</b>
+              <br />
+              {`${reason}`}
+            </div>
+          )} */}
+          {optionsReason[0]?.label !== reason && reason && (
+            <div className="mail_reason">
+              <br />
+              <b>Reason:</b>
+              <br />
+              {`${reason}`}
+            </div>
+          )}
+          {comment && (
+            <div className="mail_emp_name">
+              <br />
               <>
                 <b>Comment:</b>
                 <br />
                 {`${comment}`}
               </>
-            )}
-          </div>
-          <br />
-
-          <div className="request_line">
-            {date && <>{`I request you to kindly approve my leave.`}</>}
-          </div>
-
-          {name && (
+            </div>
+          )}
+          {date && (
             <>
-              Thanks,
               <br />
-              <span>{name && <>{`${name}`}</>}</span>
+              <div className="request_line">
+                I request you to kindly approve my leave.
+              </div>
             </>
           )}
+
+
+          <div className="mail_emp_name">
+            <br />
+            {name && (
+              <>
+                Thanks
+                <br />
+                {`${name}`}
+              </>
+            )}
+          </div>
+
 
           <div className="last_line">
             {DesignationOptions[0]?.label !== designation && (

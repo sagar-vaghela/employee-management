@@ -1,7 +1,14 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-const Notes = ({ notes, setNotes, testNotes, isNotesClicked, addNotes }) => {
+const Notes = ({
+  notes,
+  setNotes,
+  testNotes,
+  isNotesClicked,
+  addNotes,
+  index,
+}) => {
   return (
     <>
       <div className="element-block">
@@ -29,7 +36,7 @@ const Notes = ({ notes, setNotes, testNotes, isNotesClicked, addNotes }) => {
               }
             }}
           />
-          {testNotes.id === 0 ? (
+          {index === 0 ? (
             <FontAwesomeIcon
               icon={faCirclePlus}
               className="font-20"

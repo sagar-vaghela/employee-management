@@ -54,9 +54,9 @@ const HelpDesk = () => {
     }
   };
 
-  const addTest = (test) => {
+  const addProgress = (test) => {
     setIsInClicked(true);
-    if (progressTask.length === 1) {
+    if (progressTask.length === 0) {
       if (test.value !== "") {
         setProgressTask([
           ...progressTask,
@@ -99,7 +99,7 @@ const HelpDesk = () => {
         <h2 class={styles.heading}>
           Please use with Mozilla Firefox for better formatting in email.
         </h2>
-        <h1>I'm here to write your daily update.</h1>
+        <h1>I' m here to write your daily update.</h1>
       </div>
       <div class={styles.container}>
         <div class="col-sm-5">
@@ -131,13 +131,14 @@ const HelpDesk = () => {
             <label for="client_name" class="task_label">
               List of Completed Tasks :{" "}
             </label>
-            {completeTaskList.map((task) => {
+            {completeTaskList.map((task, index) => {
               return (
                 <CompletedTask
                   key={task.id}
                   setCompleteTaskList={setCompleteTaskList}
                   completeTaskList={completeTaskList}
                   task={task}
+                  index={index}
                   setIsClicked={setIsClicked}
                   isClicked={isClicked}
                   addTask={() => addTask(task)}
@@ -149,16 +150,17 @@ const HelpDesk = () => {
             <label for="client_name" class="task_label">
               List of In-Progress Tasks :{" "}
             </label>
-            {progressTask.map((test) => {
+            {progressTask.map((test,index) => {
               return (
                 <ProgressTasks
                   key={test.id}
                   setProgressTask={setProgressTask}
                   progressTask={progressTask}
                   test={test}
+                  index={index}
                   setIsInClicked={setIsInClicked}
                   isInClicked={isInClicked}
-                  addTest={() => addTest(test)}
+                  addProgress={() => addProgress(test)}
                 />
               );
             })}
@@ -213,12 +215,13 @@ const HelpDesk = () => {
             <label for="client_name" class="task_label">
               Notes :{" "}
             </label>
-            {notes.map((testNotes) => {
+            {notes.map((testNotes,index) => {
               return (
                 <Notes
                   key={testNotes.id}
                   setNotes={setNotes}
                   notes={notes}
+                  index={index}
                   testNotes={testNotes}
                   setIsNotesClicked={setIsNotesClicked}
                   isNotesClicked={isNotesClicked}
@@ -262,7 +265,7 @@ const HelpDesk = () => {
               </span>
             )}
             <span class="list_done">
-              {completeTaskList[0].value !== "" && (
+              {completeTaskList[0]?.value !== "" && (
                 <b>
                   <u>List of Completed Tasks : </u>
                 </b>
@@ -273,16 +276,21 @@ const HelpDesk = () => {
                   completeTaskList.map((task, index) => {
                     if (task.value !== "") {
                       return (
-                        <li key={index}>
-                          {task.value} <b>[Done]</b>
-                        </li>
+                        <>
+                          <li key={index}>
+                            {task.value} <b>[Done]</b>
+                          </li>
+                        </>
                       );
                     }
                   })}
               </ol>
+              {completeTaskList[0]?.value !== "" && (
+                <>Please check with the latest updates and let us know your thoughts for the same.</>
+              )}
             </span>
             <span class="list_progress">
-              {progressTask[0].value !== "" && (
+              {progressTask[0]?.value !== "" && (
                 <b>
                   <u>List of In-Progress Tasks : </u>
                 </b>
@@ -318,7 +326,7 @@ const HelpDesk = () => {
               </ol>
             </span>
             <span class="list_note">
-              {notes[0].value !== "" && (
+              {notes[0]?.value !== "" && (
                 <b>
                   <u>Notes : </u>
                 </b>
