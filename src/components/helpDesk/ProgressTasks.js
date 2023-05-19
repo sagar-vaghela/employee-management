@@ -6,7 +6,8 @@ const ProgressTasks = ({
   setProgressTask,
   test,
   isInClicked,
-  addTest,
+  addProgress,
+  index,
 }) => {
   return (
     <>
@@ -20,8 +21,11 @@ const ProgressTasks = ({
             class="form-control custom-input task_detail progress_task"
             value={test.value}
             onChange={(e) => {
-              const Taskindex = progressTask.findIndex((elm) => elm.id === test.id);
-              const task_list = progressTask[Taskindex];
+              const TaskIndex = progressTask.findIndex(
+                (elm) => elm.id === test.id
+              );
+              const task_list = progressTask[TaskIndex];
+              console.log("TaskIndex", TaskIndex);
               task_list.value = e.target.value;
               setProgressTask([...progressTask]);
               if (
@@ -35,11 +39,12 @@ const ProgressTasks = ({
               }
             }}
           />
-          {test.id === 0 ? (
+
+          {index === 0 ? (
             <FontAwesomeIcon
               icon={faCirclePlus}
               className="font-20"
-              onClick={addTest}
+              onClick={addProgress}
             ></FontAwesomeIcon>
           ) : (
             <FontAwesomeIcon

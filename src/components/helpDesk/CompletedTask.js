@@ -8,8 +8,8 @@ const CompletedTask = ({
   task,
   isClicked,
   addTask,
+  index,
 }) => {
-  
   return (
     <div class="element-block">
       <div class="">
@@ -38,7 +38,7 @@ const CompletedTask = ({
             }
           }}
         />
-        {task.id === 0 ? (
+        {index === 0 ? (
           <FontAwesomeIcon
             icon={faCirclePlus}
             className="font-20"
