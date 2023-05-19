@@ -18,7 +18,7 @@ const Notes = ({
             placeholder="Note"
             name="list_note"
             id="txt_note"
-            class="form-control custom-input task_detail note_task"
+            className="form-control custom-input task_detail note_task"
             value={testNotes.value}
             onChange={(e) => {
               const NoteIndex = notes.findIndex(

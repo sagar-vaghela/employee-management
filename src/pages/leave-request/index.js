@@ -196,14 +196,6 @@ const LeaveRequest = () => {
             {time && <span className="mail_from_time">{` From ${time}`}</span>}
             {toTime && <span className="mail_to_time">{` to ${toTime}`}</span>}
           </div>
-          {/* {type && (
-            <div className="mail_flexibility_type">
-              <br />
-              <b>Flexibility Type:</b>
-              <br />
-              {`${type}`}
-            </div>
-          )} */}
           {optionsType[0]?.label !== type && type && (
             <div className="mail_flexibility_type">
               <br />
@@ -212,14 +204,6 @@ const LeaveRequest = () => {
               {`${type}`}
             </div>
           )}
-          {/* {reason && (
-            <div className="mail_reason">
-              <br />
-              <b>Reason:</b>
-              <br />
-              {`${reason}`}
-            </div>
-          )} */}
           {optionsReason[0]?.label !== reason && reason && (
             <div className="mail_reason">
               <br />

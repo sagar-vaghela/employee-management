@@ -5,7 +5,8 @@ import ProgressTasks from "@/components/helpDesk/ProgressTasks";
 import Notes from "@/components/helpDesk/Notes";
 import RemainingTask from "@/components/helpDesk/RemainingTask";
 import Queries from "@/components/helpDesk/Queries";
-
+import Moment from 'moment';
+import HelpDeskListing from "@/components/helpDesk/HelpDeskListing";
 const HelpDesk = () => {
   const [client, setClient] = useState("");
   const [project, setProject] = useState("");
@@ -16,7 +17,7 @@ const HelpDesk = () => {
   const [remainingTaskList, setRemainingTaskList] = useState([
     { id: 0, value: "" },
   ]);
-  const [queriesList, setQueriesList] = useState([{ id: 0, value: "" },]);
+  const [queriesList, setQueriesList] = useState([{ id: 0, value: "" }]);
   const [notes, setNotes] = useState([{ id: 0, value: "" }]);
   const [tlName, setTlName] = useState("");
   const [isClicked, setIsClicked] = useState(false);
@@ -24,6 +25,7 @@ const HelpDesk = () => {
   const [isNotesClicked, setIsNotesClicked] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [isQueriesClick, setIsQueriesClick] = useState(false);
+  const formatDate = Moment().format('DD MMM, YYYY')
 
   useEffect(() => {
     completeTaskList.map((task, index) => (task.id = index));
@@ -36,6 +38,14 @@ const HelpDesk = () => {
   useEffect(() => {
     notes.map((testNotes, index) => (testNotes.id = index));
   }, [notes]);
+
+  useEffect(() => {
+    remainingTaskList.map((remainingTask, index) => (remainingTask.id = index));
+  }, [remainingTaskList]);
+
+  useEffect(() => {
+    queriesList.map((queriesTask, index) => (queriesTask.id = index));
+  }, [queriesList]);
 
   const addTask = (task) => {
     setIsClicked(true);
@@ -112,55 +122,42 @@ const HelpDesk = () => {
         setIsClick(false);
       }
     }
-  }
+  };
 
   const addQueriesTask = (queriesTask) => {
     setIsQueriesClick(true);
     if (queriesList.length === 1) {
       if (queriesList.value !== "") {
-        setQueriesList([
-          ...queriesList,
-          { id: queriesList.length, value: "" },
-        ]);
+        setQueriesList([...queriesList, { id: queriesList.length, value: "" }]);
         setIsQueriesClick(false);
       }
     } else {
       if (queriesList[queriesList?.length - 1].value !== "") {
-        setQueriesList([
-          ...queriesList,
-          { id: queriesList.length, value: "" },
-        ]);
+        setQueriesList([...queriesList, { id: queriesList.length, value: "" }]);
         setIsQueriesClick(false);
       }
     }
-  }
+  };
 
-  useEffect(() => {
-    completeTaskList.map((task, index) => task.id = index);
-    remainingTaskList.map((remainingTask, index) => remainingTask.id = index);
-    queriesList.map((queriesTask, index) => queriesTask.id = index);
-    progressTask.map((test, index) => test.id = index);
-    notes.map((testNotes, index) => testNotes.id = index);
-  }, [completeTaskList, remainingTaskList, queriesList, progressTask, notes])
 
   return (
     <>
-      <div class={styles.header}>
+      <div className={styles.header}>
         <p>HVG Help Desk</p>
       </div>
-      <div class={styles.starterTemplate}>
-        <h2 class={styles.heading}>
+      <div className={styles.starterTemplate}>
+        <h2 className={styles.heading}>
           Please use with Mozilla Firefox for better formatting in email.
         </h2>
         <h1>I' m here to write your daily update.</h1>
       </div>
-      <div class={styles.container}>
-        <div class="col-sm-5">
-          <div class="form-group stud_detail">
-            <label for="client_name">Client Name : </label>
+      <div className={styles.container}>
+        <div className="col-sm-5">
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name">Client Name : </label>
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="client_name"
               placeholder="Enter Client Name"
               onkeyup="setClientName(this);"
@@ -168,11 +165,11 @@ const HelpDesk = () => {
               onChange={(e) => setClient(e.target.value)}
             />
           </div>
-          <div class="form-group stud_detail">
-            <label for="client_name">Project Name : </label>
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name">Project Name : </label>
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="project_name"
               placeholder="Enter Project Name"
               onkeyup="setProjectName(this);"
@@ -180,8 +177,8 @@ const HelpDesk = () => {
               onChange={(e) => setProject(e.target.value)}
             />
           </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name" className="task_label">
               List of Completed Tasks :{" "}
             </label>
             {completeTaskList.map((task, index) => {
@@ -199,8 +196,8 @@ const HelpDesk = () => {
               );
             })}
           </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name" className="task_label">
               List of In-Progress Tasks :{" "}
             </label>
             {progressTask.map((test, index) => {
@@ -218,8 +215,8 @@ const HelpDesk = () => {
               );
             })}
           </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name" className="task_label">
               List of Remaining Tasks :{" "}
             </label>
             {remainingTaskList.map((remainingTask) => {
@@ -231,13 +228,15 @@ const HelpDesk = () => {
                   remainingTask={remainingTask}
                   setIsClicked={setIsClicked}
                   isClick={isClick}
-                  addRemainingTask={() => { addRemainingTask(remainingTask) }}
+                  addRemainingTask={() => {
+                    addRemainingTask(remainingTask);
+                  }}
                 />
               );
             })}
           </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name" className="task_label">
               Queries :{" "}
             </label>
             {queriesList.map((queriesTask) => {
@@ -249,13 +248,15 @@ const HelpDesk = () => {
                   queriesTask={queriesTask}
                   setIsClicked={setIsClicked}
                   isQueriesClick={isQueriesClick}
-                  addQueriesTask={() => { addQueriesTask(queriesTask) }}
+                  addQueriesTask={() => {
+                    addQueriesTask(queriesTask);
+                  }}
                 />
               );
             })}
           </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name" className="task_label">
               Notes :{" "}
             </label>
             {notes.map((testNotes, index) => {
@@ -273,11 +274,11 @@ const HelpDesk = () => {
               );
             })}
           </div>
-          <div class="form-group stud_detail">
-            <label for="tl_name">TL Name : </label>
+          <div className="form-group stud_detail">
+            <label htmlFor="tl_name">TL Name : </label>
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="tl_name"
               placeholder="TL Name"
               onkeyup="SetTlName(this);"
@@ -286,98 +287,65 @@ const HelpDesk = () => {
             />
           </div>
         </div>
-        <div class="col-sm-7">
-          <div class="mail_body">
-            {project && <span class="subject">{`Updates for ${project} as on 16th May, 2023`}<hr /></span>}
-            <div class="mail_body">
-              {client && <span class="client_name">{`Hi - ${client}`},<br /><br /></span>}
-              {project && <span class="update_msg">{`Following are the updates for ${project} as on 16th May, 2023 :`}<br /><br /></span>}
-              <span class="list_done">
-                {completeTaskList[0]?.value !== "" && (
-                  <b>
-                    <u>List of Completed Tasks : </u>
-                  </b>
-                )}
-                <br />
-                <ol type="1">
-                  {completeTaskList &&
-                    completeTaskList.map((task, index) => {
-                      if (task.value !== "") {
-                        return (
-                          <>
-                            <li key={index}>
-                              {task.value} <b>[Done]</b>
-                            </li>
-                          </>
-                        );
-                      }
-                    })}
-                </ol>
+        <div className="col-sm-7">
+          <div className="mail_body">
+            {project && (
+              <span className="subject">
+                {`Updates for ${project} as on ${formatDate}`}
+                <hr />
               </span>
-              <span class="list_progress">
-                {progressTask[0]?.value !== "" && (
-                  <b>
-                    <u>List of In-Progress Tasks : </u>
-                  </b>
-                )}
-                <br />
-                <ol type="1">
-                  {progressTask &&
-                    progressTask.map((test, index) => {
-                      if (test.value !== "") {
-                        return <li key={index}>{test.value}</li>;
-                      }
-                    })}
-                </ol>
-              </span>
-              <span class="list_remaining">
-              {remainingTaskList[0].value !== '' && (<b><u>List of Remaining Tasks : </u></b>)}
-              <br />
-              <ol type="1">
-              {remainingTaskList.map((remainingTask) => {
-                return (
-                  <>
-                    {remainingTask.value !== "" && <li>{remainingTask.id}{remainingTask.value}</li>}
-                  </>
-                )
-              })}
-              </ol>
-              </span>
-              <span class="list_query">
-              {queriesList[0].value !== '' && (<b><u>Queries : </u></b>)}<br /><ol type="1">
-
-              {queriesList.map((queriesTask) => {
-                return (
-                  <>
-                    {queriesTask.value !== "" && <li>{queriesTask.id}{queriesTask.value}</li>}
-                  </>
-                )
-              })}
-              </ol></span>
-              <span class="list_note">
-              {notes[0].value !== "" && (<b><u>Notes : </u></b>)}<br /><ol type="1">
-
-              {notes &&
-                notes.map((testNotes) => {
-                  if (testNotes.value !== "") {
-                    return <li>{testNotes.id}{testNotes.value}</li>;
-                  }
-                })}
-              </ol></span>
+            )}
+            <div className="mail_body">
+              {client && (
+                <span className="client_name">
+                  {`Hi - ${client}`},<br />
+                  <br />
+                </span>
+              )}
+              {project && (
+                <span className="update_msg">
+                  {`Following are the updates for ${project} as on ${formatDate} :`}
+                  <br />
+                  <br />
+                </span>
+              )}
+              <HelpDeskListing
+                list={completeTaskList}
+                title={"List of Completed Tasks :"}
+              />
+              <HelpDeskListing  
+                list={progressTask}
+                title={"List of In-Progress Tasks :"}
+              />
+              <HelpDeskListing
+                list={remainingTaskList}
+                title={"List of Remaining Tasks :"}
+              />
+              <HelpDeskListing list={queriesList} title={"Queries :"} />
+              <HelpDeskListing list={notes} title={"Notes :"} />
               {completeTaskList[0].value !== "" && (
-                <>Please check with the latest updates and let us know your thoughts for the same.<br /></>
+                <>
+                  Please check with the latest updates and let us know your
+                  thoughts for the same.
+                  <br />
+                </>
               )}
-              {tlName && (<>
-                <span class="thanks"><br />Thanks,<br />{tlName}</span>
-              </>
+              {tlName && (
+                <>
+                  <span className="thanks">
+                    <br />
+                    Thanks,
+                    <br />
+                    {tlName}
+                  </span>
+                </>
               )}
-              <span class="total_worked"></span>
+              <span className="total_worked"></span>
             </div>
           </div>
         </div>
       </div>
     </>
-
   );
 };
 
