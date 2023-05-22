@@ -1,38 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 const Notes = ({
-  notes,
-  setNotes,
-  testNotes,
-  isNotesClicked,
-  addNotes,
+  fields,
+  setFields,
+  field,
+  isAddButtonClicked,
+  addButtonIsClicked,
+  addField,
   index,
+  placeholder,
+  title,
 }) => {
+
+  useEffect(() => {
+    addButtonIsClicked(false);
+  }, [field.value])
+
   return (
     <>
       <div className="element-block">
         <div>
           <input
             type="text"
-            placeholder="Note"
+            placeholder={placeholder}
             name="list_note"
-            id="txt_note"
+            id={title}
             className="form-control custom-input task_detail note_task"
-            value={testNotes.value}
+            value={field.value}
             onChange={(e) => {
-              const NoteIndex = notes.findIndex(
-                (elm) => elm.id === testNotes.id
+              const NoteIndex = fields.findIndex(
+                (elm) => elm.id === field.id
               );
-              const NoteList = notes[NoteIndex];
+              const NoteList = fields[NoteIndex];
               NoteList.value = e.target.value;
-              setNotes([...notes]);
+              setFields([...fields]);
               if (
                 e.target.value === "" &&
-                testNotes.id !== notes[notes.length - 1].id
+                field.id !== fields[fields.length - 1].id
               ) {
-                const NoteData = notes.filter((elm) => elm.id !== testNotes.id);
-                setNotes(NoteData);
+                const NoteData = fields.filter((elm) => elm.id !== field.id);
+                setFields(NoteData);
               }
             }}
           />
@@ -40,19 +48,19 @@ const Notes = ({
             <FontAwesomeIcon
               icon={faCirclePlus}
               className="font-20"
-              onClick={addNotes}
+              onClick={addField}
             ></FontAwesomeIcon>
           ) : (
             <FontAwesomeIcon
               icon={faCircleMinus}
               className="font-20"
               onClick={() => {
-                const NoteData = notes.filter((t) => t.id !== testNotes.id);
-                setNotes(NoteData);
+                const NoteData = fields.filter((t) => t.id !== field.id);
+                setFields(NoteData);
               }}
             ></FontAwesomeIcon>
           )}
-          {testNotes.value === "" && isNotesClicked === true && (
+          {field.value === "" && isAddButtonClicked === true && (
             <span className="col-md-12 blank_error" style={{ color: "red" }}>
               Please Fill Existing Field.
             </span>
