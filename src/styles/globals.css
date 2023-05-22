@@ -110,10 +110,10 @@ a {
   margin-right: auto;
   margin-left: auto;
 }
-.mail_body {
+/* .mail_body {
   font-size: 20px;
   padding: 20px;
-}
+} */
 .label {
   display: inline-block;
   max-width: 100%;

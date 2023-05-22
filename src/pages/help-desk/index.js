@@ -135,7 +135,6 @@ const HelpDesk = () => {
       }
     }
   };
-console.log('isCompletedClick',isCompletedClick);
   return (
     <>
       <div className={styles.header}>
@@ -145,7 +144,7 @@ console.log('isCompletedClick',isCompletedClick);
         <h2 className={styles.heading}>
           Please use with Mozilla Firefox for better formatting in email.
         </h2>
-        <h1>I’ m here to write your daily update.</h1>
+        <h1 className={styles.head}>I'm here to write your daily update.</h1>
       </div>
       <div className={styles.container}>
         <div className="col-sm-5">
@@ -211,7 +210,6 @@ console.log('isCompletedClick',isCompletedClick);
             title={"Queries :"}
             placeholder="Query"
           />
-
           <CommonList
             fields={notes}
             setFields={setNotes}
@@ -221,7 +219,6 @@ console.log('isCompletedClick',isCompletedClick);
             title={"Notes:"}
             placeholder="Enter Notes"
           />
-
           <div className="form-group stud_detail">
             <label htmlFor="tl_name">TL Name : </label>
             <input
@@ -271,11 +268,11 @@ console.log('isCompletedClick',isCompletedClick);
               <HelpDeskListing list={queriesList} title={"Queries :"} />
               <HelpDeskListing list={notes} title={"Notes :"} />
               {completeTaskList[0].value !== "" && (
-                <>
+                <span>
                   Please check with the latest updates and let us know your
                   thoughts for the same.
                   <br />
-                </>
+                </span>
               )}
               {tlName && (
                 <>
