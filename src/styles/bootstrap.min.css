@@ -67,7 +67,7 @@
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
     font-size: 14px !important;
     line-height: 1.42857143 !important;
-    color: #333 !important;
+    color: #000000 !important;
     background-color: #fff !important;
 }
   
@@ -98,11 +98,15 @@
   }
   
   hr {
-    margin: 1rem 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+    /* margin: 1rem 0;
     color: inherit;
     background-color: currentColor;
     border: 0;
-    opacity: 0.2;
+    opacity: 0.2; */
   }
   
   hr:not([size]) {
@@ -14443,7 +14447,7 @@
   h6 {
     margin-top: 20px;
     margin-bottom: 10px;
-    color: #495057;
+    color: #000000;
   }
   
   a {
@@ -15133,6 +15137,9 @@ input.task_detail {
   display: inline-block;
   width: 91%;
   margin-bottom: 10px;
+}
+.form-control::placeholder {
+  color: #9d9d9d;
 }
 
   /*# sourceMappingURL=bootstrap.min.css.map */

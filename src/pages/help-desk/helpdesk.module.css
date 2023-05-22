@@ -1,5 +1,5 @@
 .header p {
-    font-size: 33px;
+    font-size: 35px;
     color: #fff;
     line-height: 70px;
     font-weight: bold;
@@ -11,15 +11,22 @@
     width: 90% !important;
     margin: auto;
     display: flex;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 .starterTemplate {
-    padding: 5px 15px;
+    padding: 5px 28px;
     width: 90% !important;
     margin: auto;
 }
 .heading{
     color: red;
+    font-size: 30px;
 }
+.head{
+    font-size: 36px !important;
+}
+
 .studDetail {
     width: 80%;
 }
