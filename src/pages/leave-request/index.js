@@ -70,9 +70,9 @@ const LeaveRequest = () => {
               onChange={handleDesignation}
               value={designation}
             >
-              {DesignationOptions.map((option) => (
-                <option key={option.value} value={option.label}>
-                  {option.label}
+              {DesignationOptions.map((DesOption) => (
+                <option key={DesOption.value} value={DesOption.label}>
+                  {DesOption.label}
                 </option>
               ))}
             </select>
@@ -86,9 +86,9 @@ const LeaveRequest = () => {
               onChange={handleTechnology}
               value={technology}
             >
-              {optionsTechnology.map((option) => (
-                <option key={option.value} value={option.label}>
-                  {option.label}
+              {optionsTechnology.map((TechOption) => (
+                <option key={TechOption.value} value={TechOption.label}>
+                  {TechOption.label}
                 </option>
               ))}
             </select>
@@ -138,9 +138,9 @@ const LeaveRequest = () => {
               onChange={handleType}
               value={type}
             >
-              {optionsType.map((option) => (
-                <option key={option.value} value={option.label}>
-                  {option.label}
+              {optionsType.map((TypeOption) => (
+                <option key={TypeOption.value} value={TypeOption.label}>
+                  {TypeOption.label}
                 </option>
               ))}
             </select>
@@ -154,9 +154,9 @@ const LeaveRequest = () => {
               onChange={handleReason}
               value={reason}
             >
-              {optionsReason.map((option) => (
-                <option key={option.value} value={option.label}>
-                  {option.label}
+              {optionsReason.map((ReasonOption) => (
+                <option key={ReasonOption.value} value={ReasonOption.label}>
+                  {ReasonOption.label}
                 </option>
               ))}
             </select>

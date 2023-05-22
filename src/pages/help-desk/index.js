@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./helpdesk.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import CompletedTask from "@/components/helpDesk/CompletedTask";
-import ProgressTasks from "@/components/helpDesk/ProgressTasks";
-import Notes from "@/components/helpDesk/Notes";
+import Moment from "moment";
+import HelpDeskListing from "@/components/helpDesk/HelpDeskListing";
+import CommonList from "@/components/helpDesk/CommonList";
 
 const HelpDesk = () => {
   const [client, setClient] = useState("");
@@ -13,13 +11,18 @@ const HelpDesk = () => {
     { id: 0, value: "" },
   ]);
   const [progressTask, setProgressTask] = useState([{ id: 0, value: "" }]);
-  const [remainingTask, setRemainingTask] = useState([]);
-  const [queries, setQueries] = useState([]);
+  const [remainingTaskList, setRemainingTaskList] = useState([
+    { id: 0, value: "" },
+  ]);
+  const [queriesList, setQueriesList] = useState([{ id: 0, value: "" }]);
   const [notes, setNotes] = useState([{ id: 0, value: "" }]);
   const [tlName, setTlName] = useState("");
-  const [isClicked, setIsClicked] = useState(false);
-  const [isInClicked, setIsInClicked] = useState(false);
+  const [isCompletedClick, setIsCompletedClick] = useState(false);
+  const [isProgressClicked, setIsProgressClicked] = useState(false);
   const [isNotesClicked, setIsNotesClicked] = useState(false);
+  const [isRemainClicked, setIsRemainClicked] = useState(false);
+  const [isQueriesClick, setIsQueriesClick] = useState(false);
+  const formatDate = Moment().format("DD MMM, YYYY");
 
   useEffect(() => {
     completeTaskList.map((task, index) => (task.id = index));
@@ -33,15 +36,23 @@ const HelpDesk = () => {
     notes.map((testNotes, index) => (testNotes.id = index));
   }, [notes]);
 
+  useEffect(() => {
+    remainingTaskList.map((remainingTask, index) => (remainingTask.id = index));
+  }, [remainingTaskList]);
+
+  useEffect(() => {
+    queriesList.map((queriesTask, index) => (queriesTask.id = index));
+  }, [queriesList]);
+
   const addTask = (task) => {
-    setIsClicked(true);
+    setIsCompletedClick(true);
     if (completeTaskList.length === 1) {
       if (task.value !== "") {
         setCompleteTaskList([
           ...completeTaskList,
           { id: completeTaskList.length, value: "" },
         ]);
-        setIsClicked(false);
+        setIsCompletedClick(false);
       }
     } else {
       if (completeTaskList[completeTaskList?.length - 1].value !== "") {
@@ -49,20 +60,20 @@ const HelpDesk = () => {
           ...completeTaskList,
           { id: completeTaskList.length, value: "" },
         ]);
-        setIsClicked(false);
+        setIsCompletedClick(false);
       }
     }
   };
 
-  const addTest = (test) => {
-    setIsInClicked(true);
-    if (progressTask.length === 1) {
+  const addProgress = (test) => {
+    setIsProgressClicked(true);
+    if (progressTask.length === 0) {
       if (test.value !== "") {
         setProgressTask([
           ...progressTask,
           { id: progressTask.length, value: "" },
         ]);
-        setIsInClicked(false);
+        setIsProgressClicked(false);
       }
     } else {
       if (progressTask[progressTask?.length - 1].value !== "") {
@@ -70,7 +81,7 @@ const HelpDesk = () => {
           ...progressTask,
           { id: progressTask.length, value: "" },
         ]);
-        setIsInClicked(false);
+        setIsProgressClicked(false);
       }
     }
   };
@@ -89,266 +100,192 @@ const HelpDesk = () => {
       }
     }
   };
+  const addRemainingTask = (remainingTask) => {
+    setIsRemainClicked(true);
+    if (remainingTaskList.length === 1) {
+      if (remainingTask.value !== "") {
+        setRemainingTaskList([
+          ...remainingTaskList,
+          { id: remainingTaskList.length, value: "" },
+        ]);
+        setIsRemainClicked(false);
+      }
+    } else {
+      if (remainingTaskList[remainingTaskList?.length - 1].value !== "") {
+        setRemainingTaskList([
+          ...remainingTaskList,
+          { id: remainingTaskList.length, value: "" },
+        ]);
+        setIsRemainClicked(false);
+      }
+    }
+  };
 
+  const addQueriesTask = (queriesTask) => {
+    setIsQueriesClick(true);
+    if (queriesList.length === 1) {
+      if (queriesTask.value !== "") {
+        setQueriesList([...queriesList, { id: queriesList.length, value: "" }]);
+        setIsQueriesClick(false);
+      }
+    } else {
+      if (queriesList[queriesList?.length - 1].value !== "") {
+        setQueriesList([...queriesList, { id: queriesList.length, value: "" }]);
+        setIsQueriesClick(false);
+      }
+    }
+  };
   return (
     <>
-      <div class={styles.header}>
+      <div className={styles.header}>
         <p>HVG Help Desk</p>
       </div>
-      <div class={styles.starterTemplate}>
-        <h2 class={styles.heading}>
+      <div className={styles.starterTemplate}>
+        <h2 className={styles.heading}>
           Please use with Mozilla Firefox for better formatting in email.
         </h2>
-        <h1>I'm here to write your daily update.</h1>
+        <h1 className={styles.head}>I'm here to write your daily update.</h1>
       </div>
-      <div class={styles.container}>
-        <div class="col-sm-5">
-          <div class="form-group stud_detail">
-            <label for="client_name">Client Name : </label>
+      <div className={styles.container}>
+        <div className="col-sm-5">
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name">Client Name : </label>
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="client_name"
               placeholder="Enter Client Name"
-              onkeyup="setClientName(this);"
               value={client}
               onChange={(e) => setClient(e.target.value)}
             />
           </div>
-          <div class="form-group stud_detail">
-            <label for="client_name">Project Name : </label>
+          <div className="form-group stud_detail">
+            <label htmlFor="client_name">Project Name : </label>
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="project_name"
               placeholder="Enter Project Name"
-              onkeyup="setProjectName(this);"
               value={project}
               onChange={(e) => setProject(e.target.value)}
             />
           </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
-              List of Completed Tasks :{" "}
-            </label>
-            {completeTaskList.map((task) => {
-              return (
-                <CompletedTask
-                  key={task.id}
-                  setCompleteTaskList={setCompleteTaskList}
-                  completeTaskList={completeTaskList}
-                  task={task}
-                  setIsClicked={setIsClicked}
-                  isClicked={isClicked}
-                  addTask={() => addTask(task)}
-                />
-              );
-            })}
-          </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
-              List of In-Progress Tasks :{" "}
-            </label>
-            {progressTask.map((test) => {
-              return (
-                <ProgressTasks
-                  key={test.id}
-                  setProgressTask={setProgressTask}
-                  progressTask={progressTask}
-                  test={test}
-                  setIsInClicked={setIsInClicked}
-                  isInClicked={isInClicked}
-                  addTest={() => addTest(test)}
-                />
-              );
-            })}
-          </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
-              List of Remaining Tasks :{" "}
-            </label>
-            <div class="element-block">
-              <div class="">
-                <input
-                  type="text"
-                  placeholder="Remaining Task"
-                  name="list_remaining"
-                  id="txt_remaining_task"
-                  class="form-control custom-input task_detail remaining_task"
-                  value={remainingTask}
-                  onChange={(e) => setRemainingTask(e.target.value)}
-                />
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className="font-20"
-                ></FontAwesomeIcon>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
-              Queries :{" "}
-            </label>
-            <div class="element-block">
-              <div class="">
-                <input
-                  type="text"
-                  placeholder="Query"
-                  name="list_query"
-                  id="txt_query"
-                  class="form-control custom-input task_detail query_task"
-                  value={queries}
-                  onChange={(e) => setQueries(e.target.value)}
-                />
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className="font-20"
-                ></FontAwesomeIcon>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-          <div class="form-group stud_detail">
-            <label for="client_name" class="task_label">
-              Notes :{" "}
-            </label>
-            {notes.map((testNotes) => {
-              return (
-                <Notes
-                  key={testNotes.id}
-                  setNotes={setNotes}
-                  notes={notes}
-                  testNotes={testNotes}
-                  setIsNotesClicked={setIsNotesClicked}
-                  isNotesClicked={isNotesClicked}
-                  addNotes={() => addNotes(testNotes)}
-                />
-              );
-            })}
-          </div>
-          <div class="form-group stud_detail">
-            <label for="tl_name">TL Name : </label>
+
+          <CommonList
+            fields={completeTaskList}
+            setFields={setCompleteTaskList}
+            addButtonIsClicked={setIsCompletedClick}
+            isAddButtonClicked={isCompletedClick}
+            addField={addTask}
+            title="List of Completed Tasks :"
+            placeholder="Done Task"
+          />
+
+          <CommonList
+            fields={progressTask}
+            setFields={setProgressTask}
+            addButtonIsClicked={setIsProgressClicked}
+            isAddButtonClicked={isProgressClicked}
+            addField={addProgress}
+            title="List of In-Progress Tasks :"
+            placeholder="Enter In-Progress Task"
+          />
+
+          <CommonList
+            fields={remainingTaskList}
+            setFields={setRemainingTaskList}
+            addButtonIsClicked={setIsRemainClicked}
+            isAddButtonClicked={isRemainClicked}
+            addField={addRemainingTask}
+            title={"List of Remaining Tasks :"}
+            placeholder="Remaining Tasks"
+          />
+
+          <CommonList
+            fields={queriesList}
+            setFields={setQueriesList}
+            addButtonIsClicked={setIsQueriesClick}
+            isAddButtonClicked={isQueriesClick}
+            addField={addQueriesTask}
+            title={"Queries :"}
+            placeholder="Query"
+          />
+          <CommonList
+            fields={notes}
+            setFields={setNotes}
+            addButtonIsClicked={setIsNotesClicked}
+            isAddButtonClicked={isNotesClicked}
+            addField={addNotes}
+            title={"Notes:"}
+            placeholder="Enter Notes"
+          />
+          <div className="form-group stud_detail">
+            <label htmlFor="tl_name">TL Name : </label>
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="tl_name"
               placeholder="TL Name"
-              onkeyup="SetTlName(this);"
               value={tlName}
               onChange={(e) => setTlName(e.target.value)}
             />
           </div>
         </div>
-        <div class="col-sm-7">
-          {project && (
-            <span class="subject">
-              {`Updates for ${project} as on 16th May, 2023`}
-              <hr />
-            </span>
-          )}
-          <div class="mail_body">
-            {client && (
-              <span class="client_name">
-                {`Hi - ${client}`},<br />
-                <br />
-              </span>
-            )}
+        <div className="col-sm-7">
+          <div className="mail_body">
             {project && (
-              <span class="update_msg">
-                {`Following are the updates for ${project} as on 16th May, 2023 :`}
-                <br />
-                <br />
+              <span className="subject">
+                {`Updates for ${project} as on ${formatDate}`}
+                <hr />
               </span>
             )}
-            <span class="list_done">
+            <div className="mail_body">
+              {client && (
+                <span className="client_name">
+                  {`Hi - ${client}`},<br />
+                  <br />
+                </span>
+              )}
+              {project && (
+                <span className="update_msg">
+                  {`Following are the updates for ${project} as on ${formatDate} :`}
+                  <br />
+                  <br />
+                </span>
+              )}
+              <HelpDeskListing
+                list={completeTaskList}
+                title={"List of Completed Tasks :"}
+              />
+              <HelpDeskListing
+                list={progressTask}
+                title={"List of In-Progress Tasks :"}
+              />
+              <HelpDeskListing
+                list={remainingTaskList}
+                title={"List of Remaining Tasks :"}
+              />
+              <HelpDeskListing list={queriesList} title={"Queries :"} />
+              <HelpDeskListing list={notes} title={"Notes :"} />
               {completeTaskList[0].value !== "" && (
-                <b>
-                  <u>List of Completed Tasks : </u>
-                </b>
-              )}
-              <br />
-              <ol type="1">
-                {completeTaskList &&
-                  completeTaskList.map((task, index) => {
-                    if (task.value !== "") {
-                      return (
-                        <li key={index}>
-                          {task.value} <b>[Done]</b>
-                        </li>
-                      );
-                    }
-                  })}
-              </ol>
-            </span>
-            <span class="list_progress">
-              {progressTask[0].value !== "" && (
-                <b>
-                  <u>List of In-Progress Tasks : </u>
-                </b>
-              )}
-              <br />
-              <ol type="1">
-                {progressTask &&
-                  progressTask.map((test, index) => {
-                    if (test.value !== "") {
-                      return <li key={index}>{test.value}</li>;
-                    }
-                  })}
-              </ol>
-            </span>
-            <span class="list_remaining">
-              <b>
-                <u>List of Remaining Tasks : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>test</li>
-                <li>test</li>
-              </ol>
-            </span>
-            <span class="list_query">
-              <b>
-                <u>Queries : </u>
-              </b>
-              <br />
-              <ol type="1">
-                <li>test</li>
-                <li>test</li>
-              </ol>
-            </span>
-            <span class="list_note">
-              {notes[0].value !== "" && (
-                <b>
-                  <u>Notes : </u>
-                </b>
-              )}
-              <br />
-              <ol type="1">
-                {notes &&
-                  notes.map((testNotes, index) => {
-                    if (testNotes.value !== "") {
-                      return <li key={index}>{testNotes.value}</li>;
-                    }
-                  })}
-              </ol>
-            </span>
-            {tlName && (
-              <>
-                <span class="review_note">
+                <span>
                   Please check with the latest updates and let us know your
                   thoughts for the same.
                   <br />
                 </span>
-                <span class="thanks">
-                  <br />
-                  Thanks,
-                  <br />
-                  {tlName}
-                </span>
-              </>
-            )}
-            <span class="total_worked"></span>
+              )}
+              {tlName && (
+                <>
+                  <span className="thanks">
+                    <br />
+                    Thanks,
+                    <br />
+                    {tlName}
+                  </span>
+                </>
+              )}
+              <span className="total_worked"></span>
+            </div>
           </div>
         </div>
       </div>
