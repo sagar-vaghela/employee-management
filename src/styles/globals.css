@@ -105,17 +105,17 @@ a {
 
 .container {
   display: flex;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding: 0px 15px !important;
   margin-right: auto;
   margin-left: auto;
 }
 .mail_body {
   font-size: 20px;
-  padding: 20px;
+  padding: 0 15px;
 }
-.label {
+label {
   display: inline-block;
+  font-size: 15px;
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: 700;
@@ -132,15 +132,20 @@ a {
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s,
-    -webkit-box-shadow ease-in-out 0.15s;
 }
-.form-group {
-  margin-bottom: 15px;
+h3{
+  font-size: 24px !important;
 }
-span {
+h2{
+  font-size: 30px !important;
+  margin: 20px 0px 10px;
+}
+span .form-group {
   font-size: 17px;
 }
 textarea.form-control {
   height: auto;
+}
+div .col-lg-6 {
+  padding: 0 15px;
 }

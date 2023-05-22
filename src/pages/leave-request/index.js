@@ -5,6 +5,7 @@ import {
   optionsTechnology,
   optionsType,
 } from "@/components/lib/constans";
+import styles from "./leaveRequest.module.css";
 
 const LeaveRequest = () => {
   const [name, setName] = useState("");
@@ -58,7 +59,6 @@ const LeaveRequest = () => {
               id="emp_name"
               onChange={handleName}
               value={name}
-              onkeyup="setName(this);"
             />
           </div>
           <div className="form-group">
@@ -114,7 +114,6 @@ const LeaveRequest = () => {
               id="from_time"
               onChange={handleTime}
               value={time}
-              onkeyup="set_from_time(this);"
             />
           </div>
           <div className="form-group">
@@ -170,68 +169,51 @@ const LeaveRequest = () => {
               id="comment"
               onChange={handleComment}
               value={comment}
-              onkeyup="setComment(this);"
             ></textarea>
           </div>
         </div>
 
         <div className="col-lg-6 mail_body">
-          <div className="mail_subject">
-            {name && <h3>{`Hourly Leave Request - ${name}`}</h3>}
-            {name && <hr />}
-          </div>
-          <div className="welcome_msg">{name && <>{`Hi Sir/Madam`}</>}</div>
-          <div>
-            <span className="mail_date">
-              {date && <>{`I wish to apply for leave on ${date}`}</>}
-            </span>
-            <span className="mail_from_time">
-              {time && <>{` From ${time}`}</>}
-            </span>
-            <span className="mail_to_time">
-              {toTime && <>{` to ${toTime}`}</>}
-            </span>
-          </div>
-          <div className="mail_flexibility_type">
-            <br />
-            <b>{type && <>{`Flexibility Type:`}</>}</b>
-            <br />
-            {type && <>{`${type}`}</>}
-          </div>
-          <div className="mail_reason">
-            <br />
-            <b>{reason && <>{`Reason:`}</>}</b>
-            <br />
-            {reason && <>{`${reason}`}</>}
-          </div>
-          {/* <div className="mail_comment">
-            <br />
-            <b>{comment && <>{`Comment:`}</>}</b>
-            <br />
-            {comment && <>{`${comment}`}</>}
-          </div> */}
-          <div className="mail_emp_name">
-            <br />
-            {comment && (
-              <>
-                <b>Comment:</b>
-                <br />
-                {`${comment}`}
-              </>
-            )}
-          </div>
-          <br />
-
-          <div className="request_line">
-            {date && <>{`I request you to kindly approve my leave.`}</>}
-          </div>
+          {name && (
+            <div className="mail_subject">
+              <h3>{`Hourly Leave Request - ${name}`}</h3>
+              <h3><hr /></h3>
+            </div>
+          )}
 
           {name && (
-            <>
+            <div className="welcome_msg">
+             Hi Sir/Madam
+            </div>
+          )}
+
+          <div className="time_text">
+            {date && <span className="mail_date"><br/>{`I wish to apply for leave on ${date}`}</span>}
+            {time && <span className="mail_from_time">{` from ${time}`}</span>}
+            {toTime && <span className="mail_to_time">{` to ${toTime}`}</span>}
+          </div>
+          {type && <div className="mail_flexibility_type"><br /><b>Flexibility Type:</b> <br />{`${type}`}</div>}
+
+          {reason && <div className="mail_reason"> <br /><b>Reason:</b>  <br />{`${reason}`}</div>}
+
+          {comment && (
+            <div className="mail_comment">
+              <br />
+              <b>Comment:</b>
+              <br />
+              {`${comment}`}
+          <br />
+            </div>
+          )}
+          {date && (<div className="request_line"><br/>I request you to kindly approve my leave.</div>)}
+
+          {name && (
+            <div className="mail_emp_name">
+              <br/>
               Thanks,
               <br />
-              <span>{name && <>{`${name}`}</>}</span>
-            </>
+              <span>{`${name}`}</span>
+            </div>
           )}
 
           <div className="last_line">
@@ -244,7 +226,7 @@ const LeaveRequest = () => {
               <span className="mail_technology">
                 {technology && <>{` [${technology}]`}</>}
                 <br />
-                {technology && <>{`HVG Infotech.`}</>}
+                {technology && <>HVG Infotech.</>}
               </span>
             )}
           </div>
