@@ -3,6 +3,7 @@ import styles from "./helpdesk.module.css";
 import Moment from "moment";
 import HelpDeskListing from "@/components/helpDesk/HelpDeskListing";
 import CommonList from "@/components/helpDesk/CommonList";
+import Nav from "@/components/NavBar/Nav";
 
 const HelpDesk = () => {
   const [client, setClient] = useState("");
@@ -137,6 +138,7 @@ const HelpDesk = () => {
   };
   return (
     <>
+    <Nav/>
       <div className={styles.header}>
         <p>HVG Help Desk</p>
       </div>
@@ -230,6 +232,7 @@ const HelpDesk = () => {
               onChange={(e) => setTlName(e.target.value)}
             />
           </div>
+
         </div>
         <div className="col-sm-7">
           <div className={styles.mailBody}>

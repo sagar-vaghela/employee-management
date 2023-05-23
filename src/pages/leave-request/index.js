@@ -5,7 +5,6 @@ import {
   optionsTechnology,
   optionsType,
 } from "@/components/lib/constans";
-import styles from "./leaveRequest.module.css";
 
 const LeaveRequest = () => {
   const [name, setName] = useState("");
@@ -46,6 +45,9 @@ const LeaveRequest = () => {
   };
   return (
     <>
+    <div className="header">
+        <p>HVG Leave Request</p>
+      </div>
       <div className="container">
         <div className="col-lg-6">
           <h2>Hourly Leave Request</h2>
@@ -183,7 +185,7 @@ const LeaveRequest = () => {
 
           {name && (
             <div className="welcome_msg">
-             Hi Sir/Madam
+             Hi Sir/Madam,
             </div>
           )}
 
