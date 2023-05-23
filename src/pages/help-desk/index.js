@@ -144,7 +144,7 @@ const HelpDesk = () => {
         <h2 className={styles.heading}>
           Please use with Mozilla Firefox for better formatting in email.
         </h2>
-        <h1 className={styles.head}>I'm here to write your daily update.</h1>
+        <h1 className={styles.head}>{`I'm here to write your daily update.`}</h1>
       </div>
       <div className={styles.container}>
         <div className="col-sm-5">
