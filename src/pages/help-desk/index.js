@@ -232,14 +232,14 @@ const HelpDesk = () => {
           </div>
         </div>
         <div className="col-sm-7">
-          <div className="mail_body">
+          <div className={styles.mailBody}>
             {project && (
               <span className="subject">
                 {`Updates for ${project} as on ${formatDate}`}
                 <hr />
               </span>
             )}
-            <div className="mail_body">
+            <div className={styles.mailBody}>
               {client && (
                 <span className="client_name">
                   {`Hi - ${client}`},<br />
