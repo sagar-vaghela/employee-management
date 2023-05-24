@@ -143,9 +143,6 @@ const HelpDesk = () => {
         <p>HVG Help Desk</p>
       </div>
       <div className={styles.starterTemplate}>
-        <h2 className={styles.heading}>
-          Please use with Mozilla Firefox for better formatting in email.
-        </h2>
         <h1 className={styles.head}>{`I'm here to write your daily update.`}</h1>
       </div>
       <div className={styles.container}>
