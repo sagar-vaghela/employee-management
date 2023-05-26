@@ -10,8 +10,7 @@ function HelpDeskListing(props) {
             <u>{title} </u>
           </b>
         )}
-        <br />
-        <ul>
+        <ul style={{ marginBottom: 0 }} >
           {list &&
             list.map((task, index) => {
               if (task.value !== "") {
@@ -30,6 +29,7 @@ function HelpDeskListing(props) {
               }
             })}
         </ul>
+        <br />
       </span>
     </>
   );

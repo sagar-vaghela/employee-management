@@ -251,8 +251,8 @@ const HelpDesk = () => {
           </div>
         </div>
         <div className="col-sm-7">
-          <button className="float_right" onClick={() => onClickCopy()}>
-            Copy to Clipboard
+          <button className="float_right desk" onClick={() => onClickCopy()}>
+            {isCopied ? 'Copied!!!' : 'Copy to Clipboard'}
           </button>
 
           <div id="mail_body" ref={HelpDeskRef}>

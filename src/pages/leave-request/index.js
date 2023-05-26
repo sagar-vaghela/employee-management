@@ -21,19 +21,19 @@ const LeaveRequest = () => {
   const days =
     new Date(toDate).getDate() - new Date(fromDate).getDate() + 1 || 0;
 
-  const onClickCopy = async() => {
+  const onClickCopy = async () => {
     if (leaveRef.current === null) return;
     const text = leaveRef.current.innerText;
     await navigator.clipboard.writeText(text).then(() => {
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000); // Reset the copy status after 2 seconds
     })
-    .catch((error) => {
-      console.error('Copy failed:', error);
-    });
+      .catch((error) => {
+        console.error('Copy failed:', error);
+      });
   };
 
-  console.log('isCopied',isCopied);
+  console.log('isCopied', isCopied);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -179,8 +179,8 @@ const LeaveRequest = () => {
         </div>
 
         <div className="col-lg-6 mail_body">
-          <button className="float_right" onClick={() => onClickCopy()}>
-            Copy to Clipboard
+          <button className="float_right leave_req" onClick={() => onClickCopy()}>
+            {isCopied ? 'Copied!!!' : 'Copy to Clipboard'}
           </button>
 
           <div id="mail_body" ref={leaveRef}>
