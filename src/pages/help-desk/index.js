@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./helpdesk.module.css";
 import Moment from "moment";
 import HelpDeskListing from "@/components/helpDesk/HelpDeskListing";
@@ -23,6 +23,8 @@ const HelpDesk = () => {
   const [isNotesClicked, setIsNotesClicked] = useState(false);
   const [isRemainClicked, setIsRemainClicked] = useState(false);
   const [isQueriesClick, setIsQueriesClick] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  const HelpDeskRef = useRef(null);
   const formatDate = Moment().format("DD MMM, YYYY");
 
   useEffect(() => {
@@ -44,6 +46,22 @@ const HelpDesk = () => {
   useEffect(() => {
     queriesList.map((queriesTask, index) => (queriesTask.id = index));
   }, [queriesList]);
+
+  const onClickCopy = async () => {
+    if (HelpDeskRef.current === null) return;
+    const text = HelpDeskRef.current.innerText;
+    await navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000); // Reset the copy status after 2 seconds
+      })
+      .catch((error) => {
+        console.error("Copy failed:", error);
+      });
+  };
+
+  console.log("isCopied", isCopied);
 
   const addTask = (task) => {
     setIsCompletedClick(true);
@@ -138,12 +156,14 @@ const HelpDesk = () => {
   };
   return (
     <>
-    <Nav/>
+      <Nav />
       <div className={styles.header}>
         <p>HVG Help Desk</p>
       </div>
       <div className={styles.starterTemplate}>
-        <h1 className={styles.head}>{`I'm here to write your daily update.`}</h1>
+        <h1
+          className={styles.head}
+        >{`I'm here to write your daily update.`}</h1>
       </div>
       <div className={styles.container}>
         <div className="col-sm-5">
@@ -229,62 +249,67 @@ const HelpDesk = () => {
               onChange={(e) => setTlName(e.target.value)}
             />
           </div>
-
         </div>
         <div className="col-sm-7">
-          <div className={styles.mailBody}>
-            {project && (
-              <span className="subject">
-                {`Updates for ${project} as on ${formatDate}`}
-                <hr />
-              </span>
-            )}
+          <button className="float_right" onClick={() => onClickCopy()}>
+            Copy to Clipboard
+          </button>
+
+          <div id="mail_body" ref={HelpDeskRef}>
             <div className={styles.mailBody}>
-              {client && (
-                <span className="client_name">
-                  {`Hi - ${client}`},<br />
-                  <br />
-                </span>
-              )}
               {project && (
-                <span className="update_msg">
-                  {`Following are the updates for ${project} as on ${formatDate} :`}
-                  <br />
-                  <br />
+                <span className="subject">
+                  {`Updates for ${project} as on ${formatDate}`}
+                  <hr />
                 </span>
               )}
-              <HelpDeskListing
-                list={completeTaskList}
-                title={"List of Completed Tasks :"}
-              />
-              <HelpDeskListing
-                list={progressTask}
-                title={"List of In-Progress Tasks :"}
-              />
-              <HelpDeskListing
-                list={remainingTaskList}
-                title={"List of Remaining Tasks :"}
-              />
-              <HelpDeskListing list={queriesList} title={"Queries :"} />
-              <HelpDeskListing list={notes} title={"Notes :"} />
-              {completeTaskList[0].value !== "" && (
-                <span>
-                  Please check with the latest updates and let us know your
-                  thoughts for the same.
-                  <br />
-                </span>
-              )}
-              {tlName && (
-                <>
-                  <span className="thanks">
+              <div className={styles.mailBody}>
+                {client && (
+                  <span className="client_name">
+                    {`Hi - ${client}`},<br />
                     <br />
-                    Thanks,
-                    <br />
-                    {tlName}
                   </span>
-                </>
-              )}
-              <span className="total_worked"></span>
+                )}
+                {project && (
+                  <span className="update_msg">
+                    {`Following are the updates for ${project} as on ${formatDate} :`}
+                    <br />
+                    <br />
+                  </span>
+                )}
+                <HelpDeskListing
+                  list={completeTaskList}
+                  title={"List of Completed Tasks :"}
+                />
+                <HelpDeskListing
+                  list={progressTask}
+                  title={"List of In-Progress Tasks :"}
+                />
+                <HelpDeskListing
+                  list={remainingTaskList}
+                  title={"List of Remaining Tasks :"}
+                />
+                <HelpDeskListing list={queriesList} title={"Queries :"} />
+                <HelpDeskListing list={notes} title={"Notes :"} />
+                {completeTaskList[0].value !== "" && (
+                  <span>
+                    Please check with the latest updates and let us know your
+                    thoughts for the same.
+                    <br />
+                  </span>
+                )}
+                {tlName && (
+                  <>
+                    <span className="thanks">
+                      <br />
+                      Thanks,
+                      <br />
+                      {tlName}
+                    </span>
+                  </>
+                )}
+                <span className="total_worked"></span>
+              </div>
             </div>
           </div>
         </div>

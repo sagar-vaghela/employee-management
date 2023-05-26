@@ -11,27 +11,25 @@ function HelpDeskListing(props) {
           </b>
         )}
         <br />
-        <ol type="1">
+        <ul>
           {list &&
             list.map((task, index) => {
               if (task.value !== "") {
                 if (title === "List of Completed Tasks :") {
                   return (
-                    <>
-                      <li key={index}>
-                        {task.value} <b>[Done]</b>
-                      </li>
-                    </>
+                    <li key={index}>
+                      {index + 1}. {task.value} <b>[Done]</b>
+                    </li>
                   );
                 }
                 return (
-                  <>
-                    <li key={index}>{task.value}</li>
-                  </>
+                  <li key={index}>
+                    {index + 1}. {task.value}
+                  </li>
                 );
               }
             })}
-        </ol>
+        </ul>
       </span>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   DesignationOptions,
   optionsReason,
@@ -10,14 +10,30 @@ const LeaveRequest = () => {
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState(DesignationOptions[0]?.label);
   const [technology, setTechnology] = useState(optionsTechnology[0]?.label);
-  const [date, setDate] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [type, setType] = useState(optionsType?.label);
   const [reason, setReason] = useState("");
   const [comment, setComment] = useState("");
+  const [isCopied, setIsCopied] = useState(false);
+  const leaveRef = useRef(null);
+
   const days =
     new Date(toDate).getDate() - new Date(fromDate).getDate() + 1 || 0;
+
+  const onClickCopy = async() => {
+    if (leaveRef.current === null) return;
+    const text = leaveRef.current.innerText;
+    await navigator.clipboard.writeText(text).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000); // Reset the copy status after 2 seconds
+    })
+    .catch((error) => {
+      console.error('Copy failed:', error);
+    });
+  };
+
+  console.log('isCopied',isCopied);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -43,6 +59,7 @@ const LeaveRequest = () => {
   const handleComment = (e) => {
     setComment(e?.target?.value);
   };
+
   return (
     <>
       <div className="header">
@@ -162,96 +179,98 @@ const LeaveRequest = () => {
         </div>
 
         <div className="col-lg-6 mail_body">
-          {name && (
-            <div className="mail_subject">
-              <h3>{`Hourly Leave Request - ${name}`}</h3>
-              <h3>
-                <hr />
-              </h3>
+          <button className="float_right" onClick={() => onClickCopy()}>
+            Copy to Clipboard
+          </button>
+
+          <div id="mail_body" ref={leaveRef}>
+            {name && (
+              <div className="mail_subject">
+                <h3>{`Hourly Leave Request - ${name}`}</h3>
+                <h3>
+                  <hr />
+                </h3>
+              </div>
+            )}
+
+            {name && <div className="welcome_msg">Hi Sir/Madam,</div>}
+
+            <div className="time_text">
+              {fromDate && (
+                <span className="mail_date">
+                  <br />
+                  {`I wish to apply for leave from ${fromDate}`}
+                </span>
+              )}
+              {toDate && <span className="mail_date">{` to ${toDate}`}</span>}
             </div>
-          )}
 
-          {name && <div className="welcome_msg">Hi Sir/Madam,</div>}
-
-          <div className="time_text">
-            {fromDate && (
-              <span className="mail_date">
+            {days !== 0 && (
+              <div className="mail_flexibility_type">
+                <br /> <b>Total Days:</b>
                 <br />
-                {`I wish to apply for leave from ${fromDate}`}
-              </span>
+                {`${days}`}
+              </div>
             )}
-            {toDate && <span className="mail_date">{` to ${toDate}`}</span>}
-          </div>
 
-          {days !== 0 && (
-            <div className="mail_flexibility_type">
-              <br /> <b>Total Days:</b>
-              <br />
-              {`${days}`}
-            </div>
-          )}
-
-          {type && (
-            <div className="mail_flexibility_type">
-              <br />
-              <b>Flexibility Type:</b> <br />
-              {`${type}`}
-            </div>
-          )}
-
-          {reason && (
-            <div className="mail_reason">
-              {" "}
-              <br />
-              <b>Reason:</b> <br />
-              {`${reason}`}
-            </div>
-          )}
-
-          {comment && (
-            <div className="mail_comment">
-              <br />
-              <b>Comment:</b>
-              <br />
-              {`${comment}`}
-              <br />
-            </div>
-          )}
-          {(toDate || fromDate) && (
-            <div className="request_line">
-              <br />I request you to kindly approve my leave.
-            </div>
-          )}
-
-          {name && (
-            <div className="mail_emp_name">
-              <br />
-              Thanks,
-              <br />
-              <span>{`${name}`}</span>
-            </div>
-          )}
-
-          <div className="last_line">
-            {DesignationOptions[0]?.label !== designation && (
-              <span className="mail_designation" id="mail">
-                {designation && <>{`${designation}`}</>}
-              </span>
-            )}
-            {optionsTechnology[0]?.label !== technology && (
-              <span className="mail_technology">
-                {technology && <>{` [${technology}]`}</>}
+            {type && (
+              <div className="mail_flexibility_type">
                 <br />
-                {technology && <>HVG Infotech.</>}
-              </span>
+                <b>Flexibility Type:</b> <br />
+                {`${type}`}
+              </div>
             )}
+
+            {reason && (
+              <div className="mail_reason">
+                {" "}
+                <br />
+                <b>Reason:</b> <br />
+                {`${reason}`}
+              </div>
+            )}
+
+            {comment && (
+              <div className="mail_comment">
+                <br />
+                <b>Comment:</b>
+                <br />
+                {`${comment}`}
+                <br />
+              </div>
+            )}
+            {(toDate || fromDate) && (
+              <div className="request_line">
+                <br />I request you to kindly approve my leave.
+              </div>
+            )}
+
+            {name && (
+              <div className="mail_emp_name">
+                <br />
+                Thanks,
+                <br />
+                <span>{`${name}`}</span>
+              </div>
+            )}
+
+            <div className="last_line">
+              {DesignationOptions[0]?.label !== designation && (
+                <span className="mail_designation" id="mail">
+                  {designation && <>{`${designation}`}</>}
+                </span>
+              )}
+              {optionsTechnology[0]?.label !== technology && (
+                <span className="mail_technology">
+                  {technology && <>{` [${technology}]`}</>}
+                  <br />
+                  {technology && <>HVG Infotech.</>}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <div
-        id="ui-datepicker-div"
-        className="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
-      ></div>
     </>
   );
 };
